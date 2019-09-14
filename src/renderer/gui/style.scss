@@ -1,20 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+$primary: #282828;
+$secondary: #303030;
+$background: #1f1f1f;
+
 body {
-  background-color: #222222;
+  background-color: $background;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
 }
 
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 90px;
-  height: 100vh;
-  background-color: #444444;
-}
+.main {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
 
-.videoCanvas {
-  position: fixed;
-  left: 250px;
-  top: 30px;
-  width: 200px;
-  height: 200px;
+  #sSide {
+    background-color: $primary;
+    min-width: 480px;
+  }
+
+  #vSide {
+    width: 100%;
+  }
 }

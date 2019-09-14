@@ -1,9 +1,8 @@
 import * as PIXI from 'pixi.js'
 
-export function initRenderer(main: HTMLDivElement) {
-  const videoCanvas = document.createElement('canvas')
-  videoCanvas.className = 'videoCanvas'
-  main.appendChild(videoCanvas)
+export function initRenderer() {
+
+  const videoCanvas: HTMLCanvasElement = document.getElementById('videoCanvas')
 
   const renderer = new PIXI.Renderer(
     {

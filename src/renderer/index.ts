@@ -1,9 +1,17 @@
 import { initGui } from './gui/gui'
 import { initRenderer } from './core/renderer'
 
-import './gui/style.scss';
+import { initVideoView } from './video/videoView';
+import { Loader } from 'pixi.js';
 
+export const loader = Loader.shared
 
-const gui = initGui()
+initGui()
 
-initRenderer(gui.main)
+export const renderer = initRenderer()
+
+const video = initVideoView(renderer.stage)
+
+renderer.ticker.add((delta) => {
+  video(delta)
+})
