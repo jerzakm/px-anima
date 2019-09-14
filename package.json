@@ -22,8 +22,10 @@
     "electron": "5.0.6",
     "electron-builder": "^21.0.11",
     "electron-webpack": "^2.7.4",
+    "electron-webpack-ts": "^3.2.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
+    "typescript": "^3.6.3",
     "webpack": "~4.35.3"
   },
   "repository": {
@@ -34,10 +36,5 @@
   "bugs": {
     "url": "https://github.com/jerzakm/px-anima/issues"
   },
-  "homepage": "https://github.com/jerzakm/px-anima#readme",
-  "electronWebpack": {
-    "renderer": {
-      "webpackConfig": "webpack.renderer.additions.js"
-    }
-  }
+  "homepage": "https://github.com/jerzakm/px-anima#readme"
 }
