@@ -1,8 +1,8 @@
 import { Graphics } from 'pixi.js'
 import { initGui } from './gui/gui'
-
+import { initRenderer } from './core/renderer'
 const style = require('./gui/style.scss')
 
-const g = new Graphics()
+const gui = initGui()
 
-initGui()
+const r = initRenderer(gui.main)

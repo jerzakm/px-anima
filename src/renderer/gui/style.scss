@@ -6,7 +6,15 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 400px;
+  width: 90px;
   height: 100vh;
   background-color: #444444;
+}
+
+.videoCanvas {
+  position: fixed;
+  left: 250px;
+  top: 30px;
+  width: 200px;
+  height: 200px;
 }
