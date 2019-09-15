@@ -3,6 +3,7 @@ import { loader, renderer } from "..";
 import * as PixiFilters from 'pixi-filters'
 import { PaletteLimiterBuilder, RgbColor } from "../shaders/PaletteLimiterBuilder";
 import Color = require("color");
+import { updateVideoSlider } from "./videoController";
 
 
 export const initVideoView = (parent: Container) => {
@@ -11,7 +12,7 @@ export const initVideoView = (parent: Container) => {
   return update
 }
 
-let videoController: undefined | HTMLVideoElement
+export let videoSource: undefined | HTMLVideoElement
 
 const test = async (parent: Container) => {
   const edg16 = [
@@ -25,6 +26,13 @@ const test = async (parent: Container) => {
     '#49e7ec',
   ]
 
+  const gameboy = [
+    '#332c50',
+    '#46878f',
+    '#94e344',
+    '#e2f3e4',
+  ]
+
   loader
     .add('vid', 'D:\/px-anima\/static\/vid.mp4')
     .load(() => {
@@ -35,11 +43,13 @@ const test = async (parent: Container) => {
       const vidSprite = Sprite.from(videoTexture)
 
       if (video instanceof HTMLVideoElement) {
-        videoController = video
+        videoSource = video
         video.volume = 0
         video.loop = true
-        video.playbackRate = 1.0
-        renderer.ticker.maxFPS = 8
+        // video.playbackRate = 0.5
+        renderer.ticker.maxFPS = 144
+        updateVideoSlider(videoSource.currentTime, videoSource.duration)
+        // video.pause()
       }
 
       console.log(vidSprite)
@@ -48,25 +58,25 @@ const test = async (parent: Container) => {
       parent.addChild(vidSprite)
 
       const palette: RgbColor[] = []
-      edg16.map(c => palette.push(hexStringToRgb(c)))
+      gameboy.map(c => palette.push(hexStringToRgb(c)))
 
-      const adjustment = new PixiFilters.AdjustmentFilter({ brightness: 1.1, gamma: 1.4, contrast: 2.7, saturation: 1.0, red: 1.0, green: 1.0 })
+      // const adjustment = new PixiFilters.AdjustmentFilter({ brightness: 1.1, gamma: 1.0, contrast: 2.1, saturation: 1.0, red: 1.0, green: 1.0 })
       const paletteLimiter = new PaletteLimiterBuilder(palette)
 
       vidSprite.filters = [
-        adjustment,
+        // adjustment,
         paletteLimiter,
-        new PixiFilters.PixelateFilter(16),
-        // new WaveyStripes(),
-        // new filters.AlphaFilter(0.3),
-        // new SketchFilter()
+        new PixiFilters.PixelateFilter(16)
       ]
     })
 }
 
 const update = (delta: number) => {
-  if (videoController instanceof HTMLVideoElement) {
-
+  if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
+    updateVideoSlider(videoSource.currentTime)
+    // videoController.pause()
+    // videoController.currentTime += 1.1
+    // videoController.play()
   }
 }
 

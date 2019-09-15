@@ -1,0 +1,35 @@
+.videoContainer {
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+
+  h1 {
+    margin: 0;
+    // padding: 2.5rem 2.5rem 0rem 2.5rem;
+  }
+
+  #videoCanvas {
+    width: 960px;
+    height: 480px;
+    // padding: 2.5rem;
+  }
+
+  .noUi-target {
+    max-width: 960px;
+    border-color: #121212;
+  }
+
+  .noUi-connect {
+    background-color: orange;
+  }
+
+  .noUi-tooltip {
+    top: 35px;
+    padding: 3px 10px 20px 10px;
+    background-color: rgba($color: #FFFFFF, $alpha: 0.8)
+  }
+
+  .noUi-handle {
+    max-width: 18px;
+    border-radius: 5px;
+  }
+
+}

@@ -1,5 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.css'
 import './style.scss';
+import { makeVideoPlayer } from './mainGui';
 
 const { dialog } = require('electron').remote
 
@@ -8,8 +9,6 @@ const { dialog } = require('electron').remote
 export const initGui = () => {
   makeMain()
   // const g = dialog.showOpenDialog({ properties: ['openFile'] })
-
-  // console.log(g)
 }
 
 const makeMain = () => {
@@ -26,12 +25,8 @@ const makeMain = () => {
   main.appendChild(videoSide)
 
 
-  const videoCanvas = document.createElement('canvas')
-  videoCanvas.className = 'videoCanvas'
-  videoCanvas.id = 'videoCanvas'
-  videoCanvas.style.width = `${960}px`
-  videoCanvas.style.height = `${540}px`
+  const videoContainer = makeVideoPlayer()
+  videoSide.appendChild(videoContainer)
 
-  videoSide.appendChild(videoCanvas)
   return main
 }

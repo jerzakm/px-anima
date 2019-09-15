@@ -7,6 +7,7 @@ $background: #1f1f1f;
 body {
   background-color: $background;
   font-family: 'Roboto', sans-serif;
+  color: #EEEEEE;
   margin: 0;
 }
 
@@ -24,3 +25,5 @@ body {
     width: 100%;
   }
 }
+
+@import './scss/videoPlayer.scss'
