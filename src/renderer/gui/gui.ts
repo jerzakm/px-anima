@@ -1,14 +1,9 @@
 import '@fortawesome/fontawesome-free/css/all.css'
 import './style.scss';
-import { makeVideoPlayer } from './mainGui';
-
-const { dialog } = require('electron').remote
-
-
+import { makeVideoPlayer, makeVideoSettings } from './mainGui';
 
 export const initGui = () => {
   makeMain()
-  // const g = dialog.showOpenDialog({ properties: ['openFile'] })
 }
 
 const makeMain = () => {
@@ -27,6 +22,9 @@ const makeMain = () => {
 
   const videoContainer = makeVideoPlayer()
   videoSide.appendChild(videoContainer)
+
+  const videoSettings = makeVideoSettings()
+  settingsSide.appendChild(videoSettings)
 
   return main
 }

@@ -1,0 +1,25 @@
+$primary: #282828;
+$secondary: #303030;
+$background: #1f1f1f;
+$textPrimary: #EEEEEE;
+$textSecondary: #AAAAAA;
+
+.videoSettingsContainer {
+  padding: 25px;
+
+  .settingsGroup {
+    h2 {
+      margin: 0;
+    }
+
+    span {
+      color: $textSecondary;
+    }
+
+    border-width: 0 0 0 2px;
+    border-color: $secondary;
+    border-style: solid;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+}

@@ -1,7 +1,9 @@
-import { createVideoSlider } from '../video/videoController';
+import { createVideoSlider } from '../video/videoSlider';
+import { createSettingsSliders } from '../videoSettings/settingSliders';
 
 let videoTitle: HTMLHeadingElement | undefined
 const videoContainer = document.createElement('div')
+const videoSettingsContainer = document.createElement('div')
 
 
 export const makeVideoPlayer = () => {
@@ -19,7 +21,6 @@ export const makeVideoPlayer = () => {
   const videoSlider = createVideoSlider()
   videoContainer.appendChild(videoSlider)
 
-
   return videoContainer
 }
 
@@ -31,4 +32,12 @@ const renderVideoTitle = (title: string) => {
     videoTitle.innerText = title
     videoContainer.appendChild(videoTitle)
   }
+}
+
+export const makeVideoSettings = () => {
+  videoSettingsContainer.className = 'videoSettingsContainer'
+  //Settings sliders
+  createSettingsSliders(videoSettingsContainer)
+
+  return videoSettingsContainer
 }

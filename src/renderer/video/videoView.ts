@@ -3,7 +3,7 @@ import { loader, renderer } from "..";
 import * as PixiFilters from 'pixi-filters'
 import { PaletteLimiterBuilder, RgbColor } from "../shaders/PaletteLimiterBuilder";
 import Color = require("color");
-import { updateVideoSlider } from "./videoController";
+import { updateVideoSlider } from "./videoSlider";
 
 
 export const initVideoView = (parent: Container) => {
@@ -74,9 +74,6 @@ const test = async (parent: Container) => {
 const update = (delta: number) => {
   if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
     updateVideoSlider(videoSource.currentTime)
-    // videoController.pause()
-    // videoController.currentTime += 1.1
-    // videoController.play()
   }
 }
 
