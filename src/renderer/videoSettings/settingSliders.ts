@@ -1,21 +1,40 @@
 import * as noUiSlider from 'nouislider';
 import Sortable from 'sortablejs';
+import { createColorGradingSliders } from './colorGradingSliders';
+import { sliderController } from '../video/videoSlider';
 
 export const createSettingsSliders = (parent: HTMLDivElement) => {
-  parent.innerHTML += `
-    <div class="settingsGroup">
-      <h2>Color grading</h2>
-      <span>Description of what it does. Not too long and not too short. Just right</span>
-    </div>
-    <div class="settingsGroup">
-      <h2>Pixelization</h2>
-      <span>Description of what it does. Not too long and not too short. Just right</span>
-    </div>
-    <div class="settingsGroup">
-      <h2>Palette limiter</h2>
-      <span>Description of what it does. Not too long and not too short. Just right</span>
-    </div>
-  `
+  createColorGradingSliders(parent)
 
-  Sortable.create(parent, {});
+  // Sortable.create(parent, {});
+}
+
+
+
+export const createSettingsGroup = (name: string, description: string) => {
+  const settingsGroup = document.createElement('div')
+  settingsGroup.className = `settingsGroup`
+  const header = document.createElement('h2')
+  const desc = document.createElement('span')
+  header.innerText = name
+  desc.innerText = description
+  settingsGroup.appendChild(header)
+  settingsGroup.appendChild(desc)
+  return settingsGroup
+}
+
+export const creteSliderContainer = (name: string) => {
+  const container = document.createElement('div')
+  container.className = 'sliderContainer'
+  const label = document.createElement('label')
+  label.innerText = name
+  const slider = document.createElement('div')
+
+  const value = document.createElement('label')
+  value.innerText = '!default'
+  container.appendChild(label)
+  container.appendChild(slider)
+  container.appendChild(value)
+
+  return { container, label, slider, value }
 }

@@ -4,6 +4,7 @@ import * as PixiFilters from 'pixi-filters'
 import { PaletteLimiterBuilder, RgbColor } from "../shaders/PaletteLimiterBuilder";
 import Color = require("color");
 import { updateVideoSlider } from "./videoSlider";
+import { videoFilters } from "./activeFilters";
 
 
 export const initVideoView = (parent: Container) => {
@@ -64,9 +65,10 @@ const test = async (parent: Container) => {
       const paletteLimiter = new PaletteLimiterBuilder(palette)
 
       vidSprite.filters = [
+        videoFilters.adjustment
         // adjustment,
-        paletteLimiter,
-        new PixiFilters.PixelateFilter(16)
+        // paletteLimiter,
+        // new PixiFilters.PixelateFilter(16)
       ]
     })
 }

@@ -8,18 +8,38 @@ $textSecondary: #AAAAAA;
   padding: 25px;
 
   .settingsGroup {
+    display: flex;
+    flex-direction: column;
+
     h2 {
       margin: 0;
     }
 
     span {
       color: $textSecondary;
+      margin-bottom: 20px;
     }
 
-    border-width: 0 0 0 2px;
+    border-width: 0 0 0 3px;
     border-color: $secondary;
     border-style: solid;
     padding: 15px;
     margin-bottom: 25px;
+  }
+
+  .settingsGroup:hover {
+    border-color: orange;
+  }
+}
+
+.sliderContainer {
+  display: grid;
+  grid-template-columns: 2fr 4fr 1fr;
+  margin-bottom: 12px;
+
+  label {
+    display: flex;
+    align-content: center;
+    justify-content: center;
   }
 }
