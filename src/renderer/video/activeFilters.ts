@@ -1,4 +1,4 @@
-import { AdjustmentFilter } from "pixi-filters";
+import { AdjustmentFilter, PixelateFilter } from "pixi-filters";
 
 export const videoFilters = {
   adjustment: new AdjustmentFilter(
@@ -10,5 +10,6 @@ export const videoFilters = {
       green: 1.0,
       blue: 1.0,
       alpha: 1.0
-    })
+    }),
+  pixelate: new PixelateFilter(3)
 }

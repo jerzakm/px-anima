@@ -1,11 +1,10 @@
-import * as noUiSlider from 'nouislider';
 import Sortable from 'sortablejs';
 import { createColorGradingSliders } from './colorGradingSliders';
-import { sliderController } from '../video/videoSlider';
+import { createPixelizerSliders } from './pixelizerSliders';
 
 export const createSettingsSliders = (parent: HTMLDivElement) => {
   createColorGradingSliders(parent)
-
+  createPixelizerSliders(parent)
   // Sortable.create(parent, {});
 }
 

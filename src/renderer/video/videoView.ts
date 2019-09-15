@@ -65,10 +65,8 @@ const test = async (parent: Container) => {
       const paletteLimiter = new PaletteLimiterBuilder(palette)
 
       vidSprite.filters = [
-        videoFilters.adjustment
-        // adjustment,
-        // paletteLimiter,
-        // new PixiFilters.PixelateFilter(16)
+        videoFilters.adjustment,
+        videoFilters.pixelate
       ]
     })
 }
