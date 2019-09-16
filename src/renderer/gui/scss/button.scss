@@ -1,0 +1,24 @@
+.pxBtn {
+  padding: 10px;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: orange;
+  color: black;
+
+  transition: background-color .3s;
+}
+
+.pxBtn:hover,
+.pxBtn:focus {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+}
+
+.pxBtn>* {
+  position: relative;
+}

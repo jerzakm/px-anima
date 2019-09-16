@@ -18,6 +18,7 @@ export const createSettingsGroup = (name: string, description: string) => {
   const header = document.createElement('h2')
   const desc = document.createElement('span')
   const container = document.createElement('div')
+  container.className = 'settingsGroupContainer'
   header.innerText = name
   desc.innerText = description
   settingsGroup.appendChild(header)

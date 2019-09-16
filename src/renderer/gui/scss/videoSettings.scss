@@ -27,6 +27,22 @@ $textSecondary: #AAAAAA;
       margin-bottom: 20px;
     }
 
+    .settingsGroupContainer {
+      display: flex;
+      flex-direction: column;
+
+      .btnContainer {
+        display: flex;
+        flex-direction: row-reverse;
+        align-content: space-around;
+        margin-right: 25px;
+
+        .pxBtn {
+          margin-left: 5px;
+        }
+      }
+    }
+
     border-width: 0 0 0 3px;
     border-color: $secondary;
     border-style: solid;
