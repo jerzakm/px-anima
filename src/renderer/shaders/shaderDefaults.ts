@@ -12,3 +12,19 @@ void main(void)
     vTextureCoord = aTextureCoord;
 }
 `
+
+export const defaultFragmentShader =
+    `
+  precision mediump float;
+
+  varying vec2 vTextureCoord;
+
+  uniform sampler2D uSampler;
+
+  uniform vec4 filterArea;
+
+  void main(void)
+  {
+      gl_FragColor = texture2D(uSampler, vTextureCoord);
+  }
+  `
