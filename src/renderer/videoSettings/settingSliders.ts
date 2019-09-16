@@ -17,11 +17,18 @@ export const createSettingsGroup = (name: string, description: string) => {
   settingsGroup.className = `settingsGroup`
   const header = document.createElement('h2')
   const desc = document.createElement('span')
+  const container = document.createElement('div')
   header.innerText = name
   desc.innerText = description
   settingsGroup.appendChild(header)
   settingsGroup.appendChild(desc)
-  return settingsGroup
+  settingsGroup.appendChild(container)
+
+  header.addEventListener('pointerdown', () => {
+    container.style.display == 'none' ? container.style.display = 'block' : container.style.display = 'none'
+  })
+
+  return { settingsGroup, header, desc, container }
 }
 
 export const creteSliderContainer = (name: string) => {

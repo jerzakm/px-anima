@@ -16,6 +16,19 @@ export const initVideoView = (parent: Container) => {
 
 export let videoSource: undefined | HTMLVideoElement
 
+let vidSprite: undefined | Sprite
+
+
+export const refreshFilters = () => {
+  if (vidSprite) {
+    vidSprite.filters = [
+      videoFilters.adjustment,
+      videoFilters.pixelate,
+      videoFilters.paletteLimiter
+    ]
+  }
+}
+
 const test = async (parent: Container) => {
   writeFile('test.json', 'contents...', () => {
     console.log('done??')
@@ -35,7 +48,7 @@ const test = async (parent: Container) => {
 
       const videoTexture = Texture.from(video)
 
-      const vidSprite = Sprite.from(videoTexture)
+      vidSprite = Sprite.from(videoTexture)
 
       if (video instanceof HTMLVideoElement) {
         videoSource = video
@@ -55,13 +68,7 @@ const test = async (parent: Container) => {
       const palette: RgbColor[] = []
       gameboy.map(c => palette.push(hexStringToRgb(c)))
 
-      // const adjustment = new PixiFilters.AdjustmentFilter({ brightness: 1.1, gamma: 1.0, contrast: 2.1, saturation: 1.0, red: 1.0, green: 1.0 })
-      // const paletteLimiter = new PaletteLimiterBuilder(palette)
-
-      vidSprite.filters = [
-        videoFilters.adjustment,
-        videoFilters.pixelate
-      ]
+      refreshFilters()
     })
 }
 

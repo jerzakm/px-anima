@@ -3,15 +3,15 @@ import * as noUiSlider from 'nouislider';
 import { videoFilters } from "../video/activeFilters";
 
 export const createColorGradingSliders = (parent: HTMLDivElement) => {
-  const group = createSettingsGroup('Color grading', 'Description of what it does. Not too long and not too short. Just right')
-  red(group)
-  green(group)
-  blue(group)
-  gamma(group)
-  contrast(group)
-  brightness(group)
-  saturation(group)
-  parent.appendChild(group)
+  const { container, settingsGroup } = createSettingsGroup('Color grading', 'Description of what it does. Not too long and not too short. Just right')
+  red(container)
+  green(container)
+  blue(container)
+  gamma(container)
+  contrast(container)
+  brightness(container)
+  saturation(container)
+  parent.appendChild(settingsGroup)
 }
 
 const red = (group: HTMLDivElement) => {

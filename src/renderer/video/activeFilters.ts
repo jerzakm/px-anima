@@ -1,4 +1,7 @@
 import { AdjustmentFilter, PixelateFilter } from "pixi-filters";
+import { EmptyShader } from "../shaders/EmptyShader";
+
+export const emptyFilter = new EmptyShader()
 
 export const videoFilters = {
   adjustment: new AdjustmentFilter(
@@ -11,5 +14,6 @@ export const videoFilters = {
       blue: 1.0,
       alpha: 1.0
     }),
-  pixelate: new PixelateFilter(1)
+  pixelate: new PixelateFilter(1),
+  paletteLimiter: emptyFilter
 }

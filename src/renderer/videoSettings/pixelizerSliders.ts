@@ -3,12 +3,12 @@ import * as noUiSlider from 'nouislider';
 import { videoFilters } from "../video/activeFilters";
 
 export const createPixelizerSliders = (parent: HTMLDivElement) => {
-  const group = createSettingsGroup(
+  const { container, settingsGroup } = createSettingsGroup(
     'Pixelizer',
     'Set a pixel size.'
   )
-  pixelizer(group)
-  parent.appendChild(group)
+  pixelizer(container)
+  parent.appendChild(settingsGroup)
 }
 
 const pixelizer = (group: HTMLDivElement) => {
