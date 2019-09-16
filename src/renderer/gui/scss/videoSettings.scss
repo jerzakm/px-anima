@@ -43,3 +43,11 @@ $textSecondary: #AAAAAA;
     justify-content: center;
   }
 }
+
+.colorGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  div {}
+}

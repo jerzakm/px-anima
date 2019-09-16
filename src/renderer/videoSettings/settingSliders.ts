@@ -1,10 +1,12 @@
-import Sortable from 'sortablejs';
+// import Sortable from 'sortablejs';
 import { createColorGradingSliders } from './colorGradingSliders';
 import { createPixelizerSliders } from './pixelizerSliders';
+import { createPaletteLimiterSliders } from './colorLimiter';
 
 export const createSettingsSliders = (parent: HTMLDivElement) => {
   createColorGradingSliders(parent)
   createPixelizerSliders(parent)
+  createPaletteLimiterSliders(parent)
   // Sortable.create(parent, {});
 }
 

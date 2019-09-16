@@ -11,5 +11,5 @@ export const videoFilters = {
       blue: 1.0,
       alpha: 1.0
     }),
-  pixelate: new PixelateFilter(3)
+  pixelate: new PixelateFilter(1)
 }

@@ -1,10 +1,11 @@
 import { Container, Sprite, Texture } from "pixi.js";
 import { loader, renderer } from "..";
-import * as PixiFilters from 'pixi-filters'
-import { PaletteLimiterBuilder, RgbColor } from "../shaders/PaletteLimiterBuilder";
+// import * as PixiFilters from 'pixi-filters'
+import { RgbColor } from "../shaders/PaletteLimiterBuilder";
 import Color = require("color");
 import { updateVideoSlider } from "./videoSlider";
 import { videoFilters } from "./activeFilters";
+import { writeFile } from "fs";
 
 
 export const initVideoView = (parent: Container) => {
@@ -16,16 +17,9 @@ export const initVideoView = (parent: Container) => {
 export let videoSource: undefined | HTMLVideoElement
 
 const test = async (parent: Container) => {
-  const edg16 = [
-    '#2b0f54',
-    '#ab1f65',
-    '#ff4f69',
-    '#fff7f8',
-    '#ff8142',
-    '#ffda45',
-    '#3368dc',
-    '#49e7ec',
-  ]
+  writeFile('test.json', 'contents...', () => {
+    console.log('done??')
+  })
 
   const gameboy = [
     '#332c50',
@@ -62,7 +56,7 @@ const test = async (parent: Container) => {
       gameboy.map(c => palette.push(hexStringToRgb(c)))
 
       // const adjustment = new PixiFilters.AdjustmentFilter({ brightness: 1.1, gamma: 1.0, contrast: 2.1, saturation: 1.0, red: 1.0, green: 1.0 })
-      const paletteLimiter = new PaletteLimiterBuilder(palette)
+      // const paletteLimiter = new PaletteLimiterBuilder(palette)
 
       vidSprite.filters = [
         videoFilters.adjustment,

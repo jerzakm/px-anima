@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 export function initRenderer() {
 
-  const videoCanvas: HTMLCanvasElement = document.getElementById('videoCanvas')
+  const videoCanvas: any = document.getElementById('videoCanvas')
 
   const renderer = new PIXI.Renderer(
     {

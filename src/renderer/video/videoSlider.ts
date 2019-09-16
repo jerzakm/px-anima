@@ -7,6 +7,8 @@ import { videoSource } from './videoView';
 export const createVideoSlider = () => {
   const videoSliderContainer = document.createElement('div')
 
+  const connect: any = 'lower'
+
   sliderController = noUiSlider.create(videoSliderContainer, {
     start: 0,
     tooltips: true,
@@ -16,7 +18,7 @@ export const createVideoSlider = () => {
     },
     behaviour: 'tap',
     animate: false,
-    connect: 'lower',
+    connect: connect,
     pips: {
       mode: 'positions',
       values: [0, 25, 50, 75, 100],

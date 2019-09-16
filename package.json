@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.2",
+    "@simonwep/pickr": "^1.4.2",
     "@types/nouislider": "^9.0.5",
     "@types/sortablejs": "^1.7.2",
     "color": "^3.1.2",
