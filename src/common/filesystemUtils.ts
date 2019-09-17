@@ -1,5 +1,6 @@
-import {jsReadStaticFile} from './staticWorkaround'
+import { jsReadStaticFile } from './staticWorkaround'
 
-const readStaticFile = (filename:string) => {
-
+export const readStaticFile = (filename: string) => {
+  const contents = jsReadStaticFile(filename)
+  return contents
 }

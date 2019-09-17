@@ -71,6 +71,39 @@ $textSecondary: #AAAAAA;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
 
-  div {}
+.colorBrowser {
+  background-color: #303030;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 200px;
+  padding: 0;
+
+  .paletteContainer {
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+
+    padding: 5px;
+
+    &:hover {
+      background-color: #1f1f1f;
+    }
+
+    .colorContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 350px;
+
+      div {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+
+
 }

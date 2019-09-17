@@ -5,6 +5,7 @@ import { createSettingsGroup } from "./settingSliders"
 import { PaletteLimiterBuilder, RgbColor } from '../shaders/PaletteLimiterBuilder'
 import { videoFilters } from '../video/activeFilters'
 import { refreshFilters } from '../video/videoView'
+import { readStaticFile } from '../../common/filesystemUtils'
 
 export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
   const { container, settingsGroup } = createSettingsGroup(
@@ -16,23 +17,20 @@ export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
   parent.appendChild(settingsGroup)
 }
 
-const colorPickers: any[] = []
+let colorPickers: any[] = []
+const colorPickerContainer = document.createElement('div')
 
 const palettePicker = (parentGroup: HTMLDivElement) => {
 
-  const colorGroup = document.createElement('div')
-  colorGroup.className = 'colorGroup'
-  parentGroup.appendChild(colorGroup)
-
-  const fireStorm = ['#1b2032', '#46344a', '#f95e3e', '#fd4b35', '#ec6756', '#ff845f', '#ffa15f', '#fdde85', '#ffecb3']
+  colorPickerContainer.className = 'colorGroup'
+  parentGroup.appendChild(colorPickerContainer)
 
   const edg16 = ['#e4a672', '#b86f50', '#743f39', '#3f2832', '#9e2835', '#e53b44', '#fb922b', '#ffe762', '#63c64d', '#327345', '#193d3f', '#4f6781', '#afbfd2', '#ffffff', '#2ce8f4', '#0484d1',]
 
-  fireStorm.map(c => addColorPicker(colorGroup, c))
+  edg16.map(c => addColor(colorPickerContainer, c))
 }
 
 const paletteRefresh = () => {
-  console.log('palette has changed..')
   const palette: RgbColor[] = []
   colorPickers.map(picker => {
     const pickerColor = picker.getColor().toRGBA()
@@ -49,7 +47,7 @@ const paletteRefresh = () => {
   refreshFilters()
 }
 
-const addColorPicker = (parent: HTMLDivElement, color: string) => {
+const addColor = (parent: HTMLDivElement, color: string, refresh = true) => {
   const defaultPickerConfig = {
     swatches: [
       'rgb(244, 67, 54)',
@@ -104,11 +102,14 @@ const addColorPicker = (parent: HTMLDivElement, color: string) => {
   picker.on('cancel', () => paletteRefresh())
   picker.on('close', () => paletteRefresh())
 
-  paletteRefresh()
+  refresh ? paletteRefresh() : null
   colorPickers.push(picker)
 }
 
 const makePaletteBrowser = (parentGroup: HTMLDivElement) => {
+  const defaultPalettes: ColorPalette[] = JSON.parse(readStaticFile('/lospecPalettes.json'))
+  console.log(defaultPalettes)
+
   const btnContainer = document.createElement('div')
   btnContainer.className = 'btnContainer'
 
@@ -116,10 +117,43 @@ const makePaletteBrowser = (parentGroup: HTMLDivElement) => {
   save.className = 'pxBtn'
   save.innerHTML = 'Save'
 
-  const browse = document.createElement('button')
-  browse.className = 'pxBtn'
-  browse.innerHTML = 'Browse'
-  btnContainer.appendChild(browse)
   btnContainer.appendChild(save)
   parentGroup.appendChild(btnContainer)
+
+  const colorBrowserWindow = document.createElement('ul')
+  colorBrowserWindow.className = 'colorBrowser'
+
+  parentGroup.appendChild(colorBrowserWindow)
+
+  defaultPalettes.map(cp => {
+    const paletteContainer = document.createElement('li')
+    paletteContainer.className = 'paletteContainer'
+
+    let palette = ''
+    cp.colors.map(c => palette += `<div style="background-color:${c}"></div>`)
+    paletteContainer.innerHTML +=
+      `
+        <span>${cp.name}</span>
+        <div class="colorContainer">
+          ${palette}
+        </div>
+    `
+    colorBrowserWindow.appendChild(paletteContainer)
+
+    paletteContainer.addEventListener('pointerdown', () => {
+      for (let i = 0; i < colorPickers.length; i++) {
+        colorPickers[i].destroyAndRemove()
+      }
+      colorPickers = []
+      for (const color of cp.colors) {
+        addColor(colorPickerContainer, color, false)
+      }
+      paletteRefresh()
+    })
+  })
+}
+
+interface ColorPalette {
+  name: string,
+  colors: string[]
 }
