@@ -120,7 +120,7 @@ const makePaletteBrowser = (parentGroup: HTMLDivElement) => {
   save.className = 'pxBtn'
   save.innerHTML = 'Save'
 
-  btnContainer.appendChild(save)
+  // btnContainer.appendChild(save) TODO - SAVE USER PALETTE FUNCTIONALITY
   parentGroup.appendChild(btnContainer)
 
   const colorBrowserWindow = document.createElement('ul')

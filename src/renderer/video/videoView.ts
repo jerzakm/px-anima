@@ -6,6 +6,8 @@ import Color = require("color");
 import { updateVideoSlider } from "./videoSlider";
 import { videoFilters } from "./activeFilters";
 import { writeFile } from "fs";
+import { EdgeDetectShader } from "../shaders/EdgeDetect";
+import { RadialBlurFilter, BloomFilter, KawaseBlurFilter } from "pixi-filters";
 
 
 export const initVideoView = (parent: Container) => {
@@ -24,7 +26,8 @@ export const refreshFilters = () => {
     vidSprite.filters = [
       videoFilters.adjustment,
       videoFilters.pixelate,
-      videoFilters.paletteLimiter
+      videoFilters.paletteLimiter,
+      videoFilters.edgeDetect
     ]
   }
 }
@@ -33,7 +36,7 @@ const test = async (parent: Container) => {
   writeFile('test.json', 'contents...', () => {
     console.log('done??')
   })
-  
+
   const gameboy = [
     '#332c50',
     '#46878f',
@@ -64,6 +67,19 @@ const test = async (parent: Container) => {
       vidSprite.scale.x = 1.5
       vidSprite.scale.y = 1.5
       parent.addChild(vidSprite)
+
+
+      const vidSprite2 = Sprite.from(videoTexture)
+      vidSprite2.scale.x = 1.5
+      vidSprite2.scale.y = 1.5
+      parent.addChild(vidSprite2)
+      vidSprite2.filters = [
+        videoFilters.adjustment,
+        new KawaseBlurFilter(6, 3),
+        videoFilters.paletteLimiter,
+        new EdgeDetectShader(),
+        videoFilters.pixelate,
+      ]
 
       const palette: RgbColor[] = []
       gameboy.map(c => palette.push(hexStringToRgb(c)))

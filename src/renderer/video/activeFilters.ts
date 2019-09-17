@@ -1,5 +1,6 @@
-import { AdjustmentFilter, PixelateFilter } from "pixi-filters";
+import { AdjustmentFilter, PixelateFilter, BloomFilter } from "pixi-filters";
 import { EmptyShader } from "../shaders/EmptyShader";
+import { EdgeDetectShader } from "../shaders/EdgeDetect";
 
 export const emptyFilter = new EmptyShader()
 
@@ -15,5 +16,6 @@ export const videoFilters = {
       alpha: 1.0
     }),
   pixelate: new PixelateFilter(1),
-  paletteLimiter: emptyFilter
+  paletteLimiter: emptyFilter,
+  edgeDetect: emptyFilter
 }
