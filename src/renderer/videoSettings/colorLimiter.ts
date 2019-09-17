@@ -19,15 +19,18 @@ export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
 
 let colorPickers: any[] = []
 const colorPickerContainer = document.createElement('div')
+const addColorBtn = document.createElement('div')
 
 const palettePicker = (parentGroup: HTMLDivElement) => {
 
   colorPickerContainer.className = 'colorGroup'
   parentGroup.appendChild(colorPickerContainer)
 
-  const edg16 = ['#e4a672', '#b86f50', '#743f39', '#3f2832', '#9e2835', '#e53b44', '#fb922b', '#ffe762', '#63c64d', '#327345', '#193d3f', '#4f6781', '#afbfd2', '#ffffff', '#2ce8f4', '#0484d1',]
+  addColorBtn.className = 'addColorBtn'
+  addColorBtn.innerText = '+'
+  colorPickerContainer.appendChild(addColorBtn)
 
-  edg16.map(c => addColor(colorPickerContainer, c))
+  addColorBtn.addEventListener('pointerdown', () => addColor(colorPickerContainer, '#6622AA'))
 }
 
 const paletteRefresh = () => {
@@ -78,7 +81,7 @@ const addColor = (parent: HTMLDivElement, color: string, refresh = true) => {
   }
 
   const el = document.createElement('div')
-  parent.appendChild(el)
+  parent.insertBefore(el, addColorBtn)
   let picker = new Pickr(Object.assign({
     el, theme: 'monolith',
     default: color
