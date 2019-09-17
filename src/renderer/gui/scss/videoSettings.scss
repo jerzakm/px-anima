@@ -39,6 +39,14 @@ $textSecondary: #AAAAAA;
 
         .pxBtn {
           margin-left: 5px;
+          cursor: pointer;
+          transition: 0.3s;
+          color: white;
+        }
+
+        .pxBtn:hover {
+          background-color: #1f1f1f;
+          color: #EEEEEE;
         }
       }
     }
@@ -73,6 +81,7 @@ $textSecondary: #AAAAAA;
   flex-wrap: wrap;
 
   .addColorBtn {
+    margin-left: 10px;
     width: 25px;
     height: 25px;
     display: flex;
