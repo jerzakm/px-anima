@@ -5,21 +5,25 @@ import { RgbColor } from "../shaders/PaletteLimiterBuilder";
 import { updateVideoSlider } from "./videoSlider";
 import { videoFilters } from "./activeFilters";
 import { hexStringToRgb } from "../../common/color";
+import { refreshVideoHeader } from "./videoInterface";
 
 export let videoSource: undefined | HTMLVideoElement
 let pixiVideoParent: Container | undefined
 let vidSprite: undefined | Sprite
 
-const videoPlaybackSettings = {
+export const videoPlaybackSettings = {
   volume: 0,
   loop: true,
   scale: { x: 1, y: 1 },
   playbackSpeed: 1,
-  tickerFps: 60
+  tickerFps: 60,
+  min: 0,
+  max: 0
 }
 
 export const initVideoView = (parent: Container) => {
   pixiVideoParent = parent
+  playVideo('D:\/px-anima\/static\/vid.mp4')
   return update
 }
 
@@ -45,6 +49,9 @@ export const playVideo = async (path: string) => {
       })
   }
 
+  const name = path.split('\\')
+  const title = name[name.length - 1].split('.')[0]
+  refreshVideoHeader(title, path)
 
   function play() {
     if (pixiVideoParent) {
@@ -59,7 +66,8 @@ export const playVideo = async (path: string) => {
         video.volume = 0
         video.loop = true
         renderer.ticker.maxFPS = 144
-        updateVideoSlider(videoSource.currentTime, videoSource.duration)
+        videoPlaybackSettings.max = videoSource.duration
+        updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
       }
 
       vidSprite.scale.x = 1.5
@@ -73,6 +81,10 @@ export const playVideo = async (path: string) => {
 
 const update = (delta: number) => {
   if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
-    updateVideoSlider(videoSource.currentTime)
+    if (videoSource.currentTime > videoPlaybackSettings.max) {
+      videoSource.currentTime = videoPlaybackSettings.min
+    }
+
+    updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
   }
 }

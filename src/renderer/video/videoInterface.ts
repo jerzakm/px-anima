@@ -25,6 +25,8 @@ export const makeVideoPlayer = () => {
   //Slider
   const videoSlider = createVideoSlider()
   videoContainer.appendChild(videoSlider)
+  //PlaybackControlls
+  makePlaybackControlls()
 
   return videoContainer
 }
@@ -58,6 +60,29 @@ const makeVideoHeader = () => {
       playVideo(result[0])
     }
   })
+}
+
+const makePlaybackControlls = () => {
+  const playbackControlls = document.createElement('div')
+
+  const play = document.createElement('button')
+  play.className = 'pxBtn'
+  playbackControlls.appendChild(play)
+
+  const pause = document.createElement('button')
+  pause.className = 'pxBtn'
+  playbackControlls.appendChild(pause)
+
+  const momentStart = document.createElement('button')
+  momentStart.className = 'pxBtn'
+  playbackControlls.appendChild(momentStart)
+
+  const momentEnd = document.createElement('button')
+  momentEnd.className = 'pxBtn'
+  playbackControlls.appendChild(momentEnd)
+
+
+  videoContainer.appendChild(playbackControlls)
 }
 
 export const refreshVideoHeader = (title: string, path: string) => {
