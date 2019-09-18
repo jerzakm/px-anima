@@ -4,6 +4,8 @@ import { createSettingsSliders } from '../videoSettings/settingSliders';
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
 
+let videoHeaderI: any = {}
+
 
 export const makeVideoPlayer = () => {
   videoContainer.className = 'videoContainer'
@@ -34,20 +36,24 @@ const makeVideoHeader = () => {
   const bMediaBtn = document.createElement('button')
   bMediaBtn.className = 'pxBtn'
 
+  videoHeaderI.title = theader
+  videoHeaderI.path = tPath
+
   videoHeader.appendChild(hTitleContainer)
   hTitleContainer.appendChild(theader)
   hTitleContainer.appendChild(tPath)
   videoHeader.appendChild(bMediaBtn)
 
-  theader.innerText = 'Default title'
+  theader.innerText = 'No file has been loaded, press load button ===>'
   tPath.innerText = 'path/to/the/file/looks/kinda/like/this.mp4'
   bMediaBtn.innerText = 'Load video'
 
   videoContainer.appendChild(videoHeader)
 }
 
-const refreshVideoHeader = (title: string, path: string) => {
-
+export const refreshVideoHeader = (title: string, path: string) => {
+  videoHeaderI.title.innerText = title
+  videoHeaderI.path.innerText = path
 }
 
 export const makeVideoSettings = () => {
