@@ -1,7 +1,11 @@
+import Jimp from 'jimp'
 const { dialog } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
-import { playVideo } from './videoView'
+import { playVideo, videoSource, vidSprite } from './videoView'
+import { renderer } from '..'
+import { writeFile } from 'fs'
+import { RenderTexture, Sprite } from 'pixi.js'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -64,23 +68,27 @@ const makeVideoHeader = () => {
 
 const makePlaybackControlls = () => {
   const playbackControlls = document.createElement('div')
+  playbackControlls.className = 'playbackControlls'
 
   const play = document.createElement('button')
   play.className = 'pxBtn'
+  play.innerText = 'Play / Pause'
   playbackControlls.appendChild(play)
 
-  const pause = document.createElement('button')
-  pause.className = 'pxBtn'
-  playbackControlls.appendChild(pause)
+  const test = document.createElement('button')
+  test.className = 'pxBtn'
+  test.innerText = 'test'
+  playbackControlls.appendChild(test)
 
-  const momentStart = document.createElement('button')
-  momentStart.className = 'pxBtn'
-  playbackControlls.appendChild(momentStart)
+  play.addEventListener('pointerdown', () => {
+    if (videoSource) {
+      videoSource.paused ? videoSource.play() : videoSource.pause()
+    }
+  })
 
-  const momentEnd = document.createElement('button')
-  momentEnd.className = 'pxBtn'
-  playbackControlls.appendChild(momentEnd)
-
+  test.addEventListener('pointerdown', () => {
+    saveFrameToImage()
+  })
 
   videoContainer.appendChild(playbackControlls)
 }
@@ -96,4 +104,28 @@ export const makeVideoSettings = () => {
   createSettingsSliders(videoSettingsContainer)
 
   return videoSettingsContainer
+}
+
+const saveFrameToImage = () => {
+  if (vidSprite) {
+
+    const rt = RenderTexture.create({ width: vidSprite.width * vidSprite.scale.x, height: vidSprite.height * vidSprite.scale.x })
+    renderer.renderer.render(vidSprite, rt);
+    const sp = Sprite.from(rt)
+    // sp.scale.x = 0.1
+    // sp.scale.y = 0.1
+
+
+    console.log(renderer.renderer)
+    const canvas = renderer.renderer.extract.canvas(sp)
+    canvas.toDataURL()
+    const url = canvas.toDataURL('image/png');
+    console.log(vidSprite)
+    console.log(canvas)
+    // remove Base64 stuff from the Image
+    const base64Data = url.replace(/^data:image\/png;base64,/, "");
+    writeFile('test.png', base64Data, 'base64', function (err) {
+      console.log(err);
+    });
+  }
 }

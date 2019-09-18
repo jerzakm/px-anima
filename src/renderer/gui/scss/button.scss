@@ -14,9 +14,10 @@
   transition: background-color .3s;
 }
 
-.pxBtn:hover,
-.pxBtn:focus {
+.pxBtn:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, .6);
+  background-color: #ffbf60;
+  color: #EEEEEE;
 }
 
 .pxBtn>* {

@@ -1,15 +1,12 @@
-import { Container, Sprite, Texture } from "pixi.js";
-import { loader, renderer } from "..";
-// import * as PixiFilters from 'pixi-filters'
-import { RgbColor } from "../shaders/PaletteLimiterBuilder";
-import { updateVideoSlider } from "./videoSlider";
-import { videoFilters } from "./activeFilters";
-import { hexStringToRgb } from "../../common/color";
-import { refreshVideoHeader } from "./videoInterface";
+import { Container, Sprite, Texture } from "pixi.js"
+import { loader, renderer } from ".."
+import { updateVideoSlider } from "./videoSlider"
+import { videoFilters } from "./activeFilters"
+import { refreshVideoHeader } from "./videoInterface"
 
 export let videoSource: undefined | HTMLVideoElement
 let pixiVideoParent: Container | undefined
-let vidSprite: undefined | Sprite
+export let vidSprite: undefined | Sprite
 
 export const videoPlaybackSettings = {
   volume: 0,
@@ -24,6 +21,7 @@ export const videoPlaybackSettings = {
 export const initVideoView = (parent: Container) => {
   pixiVideoParent = parent
   playVideo('D:\/px-anima\/static\/vid.mp4')
+
   return update
 }
 
