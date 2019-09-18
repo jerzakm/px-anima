@@ -8,6 +8,7 @@ import { videoFilters } from "./activeFilters";
 import { writeFile } from "fs";
 import { EdgeDetectShader } from "../shaders/EdgeDetect";
 import { RadialBlurFilter, BloomFilter, KawaseBlurFilter } from "pixi-filters";
+import { hexStringToRgb } from "../../common/color";
 
 
 export const initVideoView = (parent: Container) => {
@@ -33,9 +34,9 @@ export const refreshFilters = () => {
 }
 
 const test = async (parent: Container) => {
-  writeFile('test.json', 'contents...', () => {
-    console.log('done??')
-  })
+  // writeFile('test.json', 'contents...', () => {
+  //   console.log('done??')
+  // })
 
   const gameboy = [
     '#332c50',
@@ -57,29 +58,26 @@ const test = async (parent: Container) => {
         videoSource = video
         video.volume = 0
         video.loop = true
-        // video.playbackRate = 0.5
         renderer.ticker.maxFPS = 144
         updateVideoSlider(videoSource.currentTime, videoSource.duration)
-        // video.pause()
       }
 
-      console.log(vidSprite)
       vidSprite.scale.x = 1.5
       vidSprite.scale.y = 1.5
       parent.addChild(vidSprite)
 
 
-      const vidSprite2 = Sprite.from(videoTexture)
-      vidSprite2.scale.x = 1.5
-      vidSprite2.scale.y = 1.5
-      parent.addChild(vidSprite2)
-      vidSprite2.filters = [
-        videoFilters.adjustment,
-        new KawaseBlurFilter(6, 3),
-        videoFilters.paletteLimiter,
-        new EdgeDetectShader(),
-        videoFilters.pixelate,
-      ]
+      // const vidSprite2 = Sprite.from(videoTexture)
+      // vidSprite2.scale.x = 1.5
+      // vidSprite2.scale.y = 1.5
+      // parent.addChild(vidSprite2)
+      // vidSprite2.filters = [
+      //   videoFilters.adjustment,
+      //   new KawaseBlurFilter(6, 3),
+      //   videoFilters.paletteLimiter,
+      //   new EdgeDetectShader(),
+      //   videoFilters.pixelate,
+      // ]
 
       const palette: RgbColor[] = []
       gameboy.map(c => palette.push(hexStringToRgb(c)))
@@ -92,9 +90,4 @@ const update = (delta: number) => {
   if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
     updateVideoSlider(videoSource.currentTime)
   }
-}
-
-const hexStringToRgb = (hex: string) => {
-  const c = new Color(hex)
-  return { r: c.red(), g: c.green(), b: c.blue() }
 }

@@ -1,15 +1,36 @@
 .videoContainer {
   padding: 2.5rem 2.5rem 2.5rem 2.5rem;
 
-  h1 {
-    margin: 0;
-    // padding: 2.5rem 2.5rem 0rem 2.5rem;
+  .vHeader {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+
+    h1 {
+      margin: 0;
+    }
+
+    span {
+      color: #AAAAAA;
+    }
+
+    .pxBtn {
+      padding: 0;
+      margin-left: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .pxBtn:hover {
+      background-color: #cc7a00;
+      color: #EEEEEE;
+    }
   }
 
   #videoCanvas {
-    width: 960px;
-    height: 480px;
-    // padding: 2.5rem;
+    margin-top: 5px;
+    max-width: 50vw;
   }
 
   .noUi-target {
