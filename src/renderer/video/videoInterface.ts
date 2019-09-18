@@ -1,8 +1,7 @@
-import Jimp from 'jimp'
 const { dialog } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
-import { playVideo, videoSource, vidSprite } from './videoView'
+import { playVideo, videoSource, vidSprite, videoPlaybackSettings } from './videoView'
 import { renderer } from '..'
 import { writeFile } from 'fs'
 import { RenderTexture, Sprite } from 'pixi.js'
@@ -87,7 +86,8 @@ const makePlaybackControlls = () => {
   })
 
   test.addEventListener('pointerdown', () => {
-    saveFrameToImage()
+    // saveFrameToImage()
+    videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
   })
 
   videoContainer.appendChild(playbackControlls)
@@ -106,26 +106,35 @@ export const makeVideoSettings = () => {
   return videoSettingsContainer
 }
 
-const saveFrameToImage = () => {
-  if (vidSprite) {
+export const saveFrameToImage = async () => {
+  if (vidSprite && videoSource) {
+    const fps = 12;
+    const ms = 1 / fps
 
-    const rt = RenderTexture.create({ width: vidSprite.width * vidSprite.scale.x, height: vidSprite.height * vidSprite.scale.x })
-    renderer.renderer.render(vidSprite, rt);
-    const sp = Sprite.from(rt)
-    // sp.scale.x = 0.1
-    // sp.scale.y = 0.1
+    const makeimg = async () => {
+      if (vidSprite) {
+        const rt = RenderTexture.create({ width: vidSprite.width, height: vidSprite.height })
+        renderer.renderer.render(vidSprite, rt);
+        const sp = Sprite.from(rt)
+        // const base64Data = renderer.renderer.extract.base64(sp)
+        const canvas = renderer.renderer.extract.canvas(sp)
+        canvas.toDataURL()
+        const url = canvas.toDataURL('image/png');
+        // remove Base64 stuff from the Image
+        const base64Data = url.replace(/^data:image\/png;base64,/, "");
+        writeFile(`test/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {
+          console.log(err);
+        });
+      }
+    }
 
-
-    console.log(renderer.renderer)
-    const canvas = renderer.renderer.extract.canvas(sp)
-    canvas.toDataURL()
-    const url = canvas.toDataURL('image/png');
-    console.log(vidSprite)
-    console.log(canvas)
-    // remove Base64 stuff from the Image
-    const base64Data = url.replace(/^data:image\/png;base64,/, "");
-    writeFile('test.png', base64Data, 'base64', function (err) {
-      console.log(err);
-    });
+    // videoSource.currentTime += ms
+    // videoSource.play()
+    // await sleep(200)
+    // videoSource.pause()
+    // await sleep(200)
+    // await sleep(200)
+    makeimg()
+    // await sleep(200)
   }
 }

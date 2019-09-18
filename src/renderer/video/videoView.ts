@@ -2,7 +2,7 @@ import { Container, Sprite, Texture } from "pixi.js"
 import { loader, renderer } from ".."
 import { updateVideoSlider } from "./videoSlider"
 import { videoFilters } from "./activeFilters"
-import { refreshVideoHeader } from "./videoInterface"
+import { refreshVideoHeader, saveFrameToImage } from "./videoInterface"
 
 export let videoSource: undefined | HTMLVideoElement
 let pixiVideoParent: Container | undefined
@@ -15,7 +15,8 @@ export const videoPlaybackSettings = {
   playbackSpeed: 1,
   tickerFps: 60,
   min: 0,
-  max: 0
+  max: 0,
+  recordingMode: false
 }
 
 export const initVideoView = (parent: Container) => {
@@ -63,7 +64,7 @@ export const playVideo = async (path: string) => {
         videoSource = video
         video.volume = 0
         video.loop = true
-        renderer.ticker.maxFPS = 144
+        renderer.ticker.maxFPS = 6
         videoPlaybackSettings.max = videoSource.duration
         updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
       }
@@ -84,5 +85,9 @@ const update = (delta: number) => {
     }
 
     updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
+
+    if (videoPlaybackSettings.recordingMode) {
+      saveFrameToImage()
+    }
   }
 }
