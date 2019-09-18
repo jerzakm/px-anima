@@ -33,7 +33,6 @@ export const createVideoSlider = () => {
 
 const initEventBindings = (slider: noUiSlider.noUiSlider) => {
   slider.on('start', () => {
-    console.log('start')
     if (videoSource) {
       videoSource.pause()
     }

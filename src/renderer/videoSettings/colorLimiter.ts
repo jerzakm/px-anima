@@ -111,7 +111,6 @@ const addColor = (parent: HTMLDivElement, color: string, refresh = true) => {
 
 const makePaletteBrowser = (parentGroup: HTMLDivElement) => {
   const defaultPalettes: ColorPalette[] = JSON.parse(readStaticFile('/lospecPalettes.json'))
-  console.log(defaultPalettes)
 
   const btnContainer = document.createElement('div')
   btnContainer.className = 'btnContainer'

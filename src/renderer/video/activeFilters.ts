@@ -1,6 +1,5 @@
 import { AdjustmentFilter, PixelateFilter, BloomFilter } from "pixi-filters";
 import { EmptyShader } from "../shaders/EmptyShader";
-import { EdgeDetectShader } from "../shaders/EdgeDetect";
 
 export const emptyFilter = new EmptyShader()
 

@@ -2,17 +2,13 @@ import { Container, Sprite, Texture } from "pixi.js";
 import { loader, renderer } from "..";
 // import * as PixiFilters from 'pixi-filters'
 import { RgbColor } from "../shaders/PaletteLimiterBuilder";
-import Color = require("color");
 import { updateVideoSlider } from "./videoSlider";
 import { videoFilters } from "./activeFilters";
-import { writeFile } from "fs";
-import { EdgeDetectShader } from "../shaders/EdgeDetect";
-import { RadialBlurFilter, BloomFilter, KawaseBlurFilter } from "pixi-filters";
 import { hexStringToRgb } from "../../common/color";
 
 
 export const initVideoView = (parent: Container) => {
-  test(parent)
+
 
   return update
 }
@@ -34,9 +30,6 @@ export const refreshFilters = () => {
 }
 
 const test = async (parent: Container) => {
-  // writeFile('test.json', 'contents...', () => {
-  //   console.log('done??')
-  // })
 
   const gameboy = [
     '#332c50',

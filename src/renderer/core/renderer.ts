@@ -29,8 +29,6 @@ export function initRenderer() {
 
   ticker.start()
 
-  // document.body.appendChild(renderer.view)
-
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
 
   return { renderer, stage, ticker }
