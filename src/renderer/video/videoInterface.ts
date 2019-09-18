@@ -1,5 +1,7 @@
-import { createVideoSlider } from './videoSlider';
-import { createSettingsSliders } from '../videoSettings/settingSliders';
+const { dialog } = require('electron').remote
+import { createVideoSlider } from './videoSlider'
+import { createSettingsSliders } from '../videoSettings/settingSliders'
+import { playVideo } from './videoView'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -49,6 +51,13 @@ const makeVideoHeader = () => {
   bMediaBtn.innerText = 'Load video'
 
   videoContainer.appendChild(videoHeader)
+
+  bMediaBtn.addEventListener('pointerdown', () => {
+    const result = dialog.showOpenDialog({ properties: ['openFile'] })
+    if (result && result.length > 0) {
+      playVideo(result[0])
+    }
+  })
 }
 
 export const refreshVideoHeader = (title: string, path: string) => {

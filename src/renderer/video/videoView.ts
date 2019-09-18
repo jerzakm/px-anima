@@ -6,17 +6,22 @@ import { updateVideoSlider } from "./videoSlider";
 import { videoFilters } from "./activeFilters";
 import { hexStringToRgb } from "../../common/color";
 
-
-export const initVideoView = (parent: Container) => {
-
-
-  return update
-}
-
 export let videoSource: undefined | HTMLVideoElement
-
+let pixiVideoParent: Container | undefined
 let vidSprite: undefined | Sprite
 
+const videoPlaybackSettings = {
+  volume: 0,
+  loop: true,
+  scale: { x: 1, y: 1 },
+  playbackSpeed: 1,
+  tickerFps: 60
+}
+
+export const initVideoView = (parent: Container) => {
+  pixiVideoParent = parent
+  return update
+}
 
 export const refreshFilters = () => {
   if (vidSprite) {
@@ -28,20 +33,22 @@ export const refreshFilters = () => {
     ]
   }
 }
+//'D:\/px-anima\/static\/vid.mp4'
+export const playVideo = async (path: string) => {
+  if (loader.resources[path]) {
+    play()
+  } else {
+    loader
+      .add(path, path)
+      .load(() => {
+        play()
+      })
+  }
 
-const test = async (parent: Container) => {
 
-  const gameboy = [
-    '#332c50',
-    '#46878f',
-    '#94e344',
-    '#e2f3e4',
-  ]
-
-  loader
-    .add('vid', 'D:\/px-anima\/static\/vid.mp4')
-    .load(() => {
-      const video = loader.resources['vid'].data
+  function play() {
+    if (pixiVideoParent) {
+      const video = loader.resources[path].data
 
       const videoTexture = Texture.from(video)
 
@@ -57,26 +64,11 @@ const test = async (parent: Container) => {
 
       vidSprite.scale.x = 1.5
       vidSprite.scale.y = 1.5
-      parent.addChild(vidSprite)
-
-
-      // const vidSprite2 = Sprite.from(videoTexture)
-      // vidSprite2.scale.x = 1.5
-      // vidSprite2.scale.y = 1.5
-      // parent.addChild(vidSprite2)
-      // vidSprite2.filters = [
-      //   videoFilters.adjustment,
-      //   new KawaseBlurFilter(6, 3),
-      //   videoFilters.paletteLimiter,
-      //   new EdgeDetectShader(),
-      //   videoFilters.pixelate,
-      // ]
-
-      const palette: RgbColor[] = []
-      gameboy.map(c => palette.push(hexStringToRgb(c)))
-
+      pixiVideoParent.removeChildren()
+      pixiVideoParent.addChild(vidSprite)
       refreshFilters()
-    })
+    }
+  }
 }
 
 const update = (delta: number) => {
