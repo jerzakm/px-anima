@@ -1,11 +1,8 @@
 const { dialog } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
-import { playVideo, videoSource, vidSprite, videoPlaybackSettings } from './videoView'
-import { renderer } from '..'
-import { writeFile } from 'fs'
-import { RenderTexture, Sprite } from 'pixi.js'
-import { videoFilters } from './activeFilters';
+import { playVideo, videoSource, videoPlaybackSettings } from './videoView'
+import { createPlaybackSliders } from '../videoSettings/vidPlayback'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -101,30 +98,5 @@ export const refreshVideoHeader = (title: string, path: string) => {
 export const makeVideoSettings = () => {
   videoSettingsContainer.className = 'videoSettingsContainer'
   createSettingsSliders(videoSettingsContainer)
-
   return videoSettingsContainer
-}
-
-export const saveFrameToImage = async () => {
-  if (vidSprite && videoSource) {
-    const fps = 12;
-    const ms = 1 / fps
-
-    const makeimg = async () => {
-      if (vidSprite) {
-        const rt = RenderTexture.create({ width: vidSprite.width, height: vidSprite.height })
-        renderer.renderer.render(vidSprite, rt);
-        const sp = Sprite.from(rt)
-        sp.scale.x = 1/videoFilters.pixelate.uniforms.size[0]
-        console.log(videoFilters.pixelate.uniforms.size[0])
-        sp.scale.y = 1/videoFilters.pixelate.uniforms.size[0]
-        const b64 = renderer.renderer.extract.base64(sp)
-        const base64Data = b64.replace(/^data:image\/png;base64,/, "");
-        writeFile(`test/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {
-          console.log(err);
-        });
-      }
-    }
-    makeimg()
-  }
 }

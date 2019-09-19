@@ -2,7 +2,8 @@ import { Container, Sprite, Texture } from "pixi.js"
 import { loader, renderer } from ".."
 import { updateVideoSlider } from "./videoSlider"
 import { videoFilters } from "./activeFilters"
-import { refreshVideoHeader, saveFrameToImage } from "./videoInterface"
+import { refreshVideoHeader } from "./videoInterface"
+import { saveFrameToImage } from "./videoSaving"
 
 export let videoSource: undefined | HTMLVideoElement
 let pixiVideoParent: Container | undefined
@@ -21,7 +22,7 @@ export const videoPlaybackSettings = {
 
 export const initVideoView = (parent: Container) => {
   pixiVideoParent = parent
-  // playVideo('D:\/px-anima\/static\/vid.mp4')
+  playVideo('D:\/px-anima\/static\/vid.mp4')
 
   return update
 }
@@ -64,13 +65,13 @@ export const playVideo = async (path: string) => {
         videoSource = video
         video.volume = 0
         video.loop = true
-        renderer.ticker.maxFPS = 6
+        renderer.ticker.maxFPS = 144
         videoPlaybackSettings.max = videoSource.duration
         updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
       }
 
-      vidSprite.scale.x = 1.5
-      vidSprite.scale.y = 1.5
+      vidSprite.scale.x = 1
+      vidSprite.scale.y = 1
       pixiVideoParent.removeChildren()
       pixiVideoParent.addChild(vidSprite)
       refreshFilters()
@@ -84,15 +85,18 @@ const update = (delta: number) => {
   if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
     if (videoSource.currentTime > videoPlaybackSettings.max) {
       videoSource.currentTime = videoPlaybackSettings.min
-      vidTime =videoPlaybackSettings.min
+      vidTime = videoPlaybackSettings.min
     }
-    vidTime+=0.123
-    videoSource.currentTime = vidTime
 
     updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
 
     if (videoPlaybackSettings.recordingMode) {
       saveFrameToImage()
+      vidTime += 0.123
+      videoSource.currentTime = vidTime
+      renderer.ticker.maxFPS = 3
+    } else {
+      renderer.ticker.maxFPS = 60
     }
   }
 }
