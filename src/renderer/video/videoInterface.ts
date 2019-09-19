@@ -5,6 +5,7 @@ import { playVideo, videoSource, vidSprite, videoPlaybackSettings } from './vide
 import { renderer } from '..'
 import { writeFile } from 'fs'
 import { RenderTexture, Sprite } from 'pixi.js'
+import { videoFilters } from './activeFilters';
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -114,6 +115,9 @@ export const saveFrameToImage = async () => {
         const rt = RenderTexture.create({ width: vidSprite.width, height: vidSprite.height })
         renderer.renderer.render(vidSprite, rt);
         const sp = Sprite.from(rt)
+        sp.scale.x = 1/videoFilters.pixelate.uniforms.size[0]
+        console.log(videoFilters.pixelate.uniforms.size[0])
+        sp.scale.y = 1/videoFilters.pixelate.uniforms.size[0]
         const b64 = renderer.renderer.extract.base64(sp)
         const base64Data = b64.replace(/^data:image\/png;base64,/, "");
         writeFile(`test/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {

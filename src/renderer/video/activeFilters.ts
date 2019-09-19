@@ -1,4 +1,4 @@
-import { AdjustmentFilter, PixelateFilter, BloomFilter } from "pixi-filters";
+import { AdjustmentFilter, PixelateFilter } from "pixi-filters";
 import { EmptyShader } from "../shaders/EmptyShader";
 
 export const emptyFilter = new EmptyShader()
