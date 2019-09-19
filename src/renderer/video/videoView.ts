@@ -21,7 +21,7 @@ export const videoPlaybackSettings = {
 
 export const initVideoView = (parent: Container) => {
   pixiVideoParent = parent
-  playVideo('D:\/px-anima\/static\/vid.mp4')
+  // playVideo('D:\/px-anima\/static\/vid.mp4')
 
   return update
 }
@@ -78,11 +78,16 @@ export const playVideo = async (path: string) => {
   }
 }
 
+let vidTime = 0
+
 const update = (delta: number) => {
   if (videoSource instanceof HTMLVideoElement && !videoSource.paused) {
     if (videoSource.currentTime > videoPlaybackSettings.max) {
       videoSource.currentTime = videoPlaybackSettings.min
+      vidTime =videoPlaybackSettings.min
     }
+    vidTime+=0.123
+    videoSource.currentTime = vidTime
 
     updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
 

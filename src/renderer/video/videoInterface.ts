@@ -76,7 +76,7 @@ const makePlaybackControlls = () => {
 
   const test = document.createElement('button')
   test.className = 'pxBtn'
-  test.innerText = 'test'
+  test.innerText = 'Record'
   playbackControlls.appendChild(test)
 
   play.addEventListener('pointerdown', () => {
@@ -86,7 +86,6 @@ const makePlaybackControlls = () => {
   })
 
   test.addEventListener('pointerdown', () => {
-    // saveFrameToImage()
     videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
   })
 
@@ -100,7 +99,6 @@ export const refreshVideoHeader = (title: string, path: string) => {
 
 export const makeVideoSettings = () => {
   videoSettingsContainer.className = 'videoSettingsContainer'
-  //Settings sliders
   createSettingsSliders(videoSettingsContainer)
 
   return videoSettingsContainer
@@ -116,25 +114,13 @@ export const saveFrameToImage = async () => {
         const rt = RenderTexture.create({ width: vidSprite.width, height: vidSprite.height })
         renderer.renderer.render(vidSprite, rt);
         const sp = Sprite.from(rt)
-        // const base64Data = renderer.renderer.extract.base64(sp)
-        const canvas = renderer.renderer.extract.canvas(sp)
-        canvas.toDataURL()
-        const url = canvas.toDataURL('image/png');
-        // remove Base64 stuff from the Image
-        const base64Data = url.replace(/^data:image\/png;base64,/, "");
+        const b64 = renderer.renderer.extract.base64(sp)
+        const base64Data = b64.replace(/^data:image\/png;base64,/, "");
         writeFile(`test/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {
           console.log(err);
         });
       }
     }
-
-    // videoSource.currentTime += ms
-    // videoSource.play()
-    // await sleep(200)
-    // videoSource.pause()
-    // await sleep(200)
-    // await sleep(200)
     makeimg()
-    // await sleep(200)
   }
 }
