@@ -2,7 +2,8 @@ const { dialog } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
 import { playVideo, videoSource, videoPlaybackSettings } from './videoView'
-import { createPlaybackSliders } from '../videoSettings/vidPlayback'
+import { createPlaybackSliders, outputDirPathLabel } from '../videoSettings/vidPlayback'
+import { videoRecordingSettings } from './videoSaving'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -51,7 +52,7 @@ const makeVideoHeader = () => {
 
   theader.innerText = 'No file has been loaded, press load button ===>'
   tPath.innerText = 'path/to/the/file/looks/kinda/like/this.mp4'
-  bMediaBtn.innerText = 'Load video'
+  bMediaBtn.innerText = 'Load media'
 
   videoContainer.appendChild(videoHeader)
 
@@ -72,10 +73,10 @@ const makeVidButtons = () => {
   play.innerText = 'Play / Pause'
   playbackControlls.appendChild(play)
 
-  const test = document.createElement('button')
-  test.className = 'pxBtn'
-  test.innerText = 'Record'
-  playbackControlls.appendChild(test)
+  const record = document.createElement('button')
+  record.className = 'pxBtn'
+  record.innerText = 'Record'
+  playbackControlls.appendChild(record)
 
   const loadProject = document.createElement('button')
   loadProject.className = 'pxBtn'
@@ -96,8 +97,23 @@ const makeVidButtons = () => {
     }
   })
 
-  test.addEventListener('pointerdown', () => {
-    videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
+  record.addEventListener('pointerdown', () => {
+    if (videoRecordingSettings.recordingDir == 'default') {
+      const result = dialog.showOpenDialog({ properties: ['openDirectory'] })
+      if (result && result.length > 0) {
+        videoRecordingSettings.recordingDir = result[0]
+        if (outputDirPathLabel) {
+          outputDirPathLabel.innerText = result[0]
+        }
+        recordToggle()
+      }
+    } else {
+      recordToggle()
+    }
+
+    function recordToggle() {
+      videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
+    }
   })
 
   loadProject.addEventListener('pointerdown', () => {

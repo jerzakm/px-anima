@@ -24,8 +24,10 @@ export const saveFrameToImage = async () => {
     }
     const b64 = renderer.renderer.extract.base64(sp)
     const base64Data = b64.replace(/^data:image\/png;base64,/, "");
-    writeFile(`test/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {
-      // console.log();
-    });
+    if (videoRecordingSettings.recordingDir != 'default') {
+      writeFile(`${videoRecordingSettings.recordingDir}/${new Date().getTime()}.png`, base64Data, 'base64', function (err) {
+        // console.log();
+      });
+    }
   }
 }

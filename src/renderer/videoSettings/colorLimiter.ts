@@ -6,6 +6,7 @@ import { PaletteLimiterBuilder, RgbColor } from '../shaders/PaletteLimiterBuilde
 import { videoFilters } from '../video/activeFilters'
 import { refreshFilters } from '../video/videoView'
 import { readStaticFile } from '../../common/filesystemUtils'
+import { EmptyShader } from '../shaders/EmptyShader'
 
 export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
   const { container, settingsGroup } = createSettingsGroup(
@@ -45,8 +46,13 @@ const paletteRefresh = () => {
     palette.push(paletteColor)
   })
 
-  const paletteLimiter = new PaletteLimiterBuilder(palette)
-  videoFilters.paletteLimiter = paletteLimiter
+  if (palette.length < 2) {
+    videoFilters.paletteLimiter = new EmptyShader()
+  } else {
+    const paletteLimiter = new PaletteLimiterBuilder(palette)
+    videoFilters.paletteLimiter = paletteLimiter
+  }
+
   refreshFilters()
 }
 

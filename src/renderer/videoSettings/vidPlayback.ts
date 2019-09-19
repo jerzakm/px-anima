@@ -25,6 +25,7 @@ const recording = (parent: HTMLDivElement) => {
   )
   recordingFps(container)
   recordingScale(container)
+  recordingPath(container)
   parent.appendChild(settingsGroup)
 }
 
@@ -112,6 +113,32 @@ const recordingScale = (group: HTMLDivElement) => {
       videoRecordingSettings.recordingScale = parseInt(value, 10)
     }
     playbackGroup.value.innerText = `${parseInt(value, 10)}`
+  }
+  adjustValue()
+  return group
+}
+
+export let outputDirPathLabel: undefined | HTMLSpanElement
+
+const recordingPath = (group: HTMLDivElement) => {
+  const playbackGroup = creteSliderContainer('Output folder')
+  playbackGroup.container.id = 'recordingPathSettings'
+  group.appendChild(playbackGroup.container)
+
+  const pathLabel = document.createElement('span')
+  pathLabel.innerText = `${videoRecordingSettings.recordingDir}`
+  playbackGroup.slider.appendChild(pathLabel)
+  outputDirPathLabel = pathLabel
+
+  const browseBtn = document.createElement('button')
+  browseBtn.innerText = 'Browse..'
+  browseBtn.className = 'pxBtn'
+  // browseBtn.style.maxHeight = '25px'
+  playbackGroup.value.innerHTML = ''
+  playbackGroup.value.appendChild(browseBtn)
+
+  const adjustValue = () => {
+
   }
   adjustValue()
   return group
