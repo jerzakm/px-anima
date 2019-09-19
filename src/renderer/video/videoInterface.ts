@@ -27,7 +27,7 @@ export const makeVideoPlayer = () => {
   const videoSlider = createVideoSlider()
   videoContainer.appendChild(videoSlider)
   //PlaybackControlls
-  makePlaybackControlls()
+  makeVidButtons()
 
   return videoContainer
 }
@@ -63,7 +63,7 @@ const makeVideoHeader = () => {
   })
 }
 
-const makePlaybackControlls = () => {
+const makeVidButtons = () => {
   const playbackControlls = document.createElement('div')
   playbackControlls.className = 'playbackControlls'
 
@@ -77,6 +77,19 @@ const makePlaybackControlls = () => {
   test.innerText = 'Record'
   playbackControlls.appendChild(test)
 
+  const loadProject = document.createElement('button')
+  loadProject.className = 'pxBtn'
+  loadProject.innerText = 'Load project'
+  loadProject.style.marginLeft = '50px'
+  loadProject.style.backgroundColor = '#63C64D'
+  playbackControlls.appendChild(loadProject)
+
+  const saveProject = document.createElement('button')
+  saveProject.className = 'pxBtn'
+  saveProject.innerText = 'Save project'
+  saveProject.style.backgroundColor = '#17A1A9'
+  playbackControlls.appendChild(saveProject)
+
   play.addEventListener('pointerdown', () => {
     if (videoSource) {
       videoSource.paused ? videoSource.play() : videoSource.pause()
@@ -85,6 +98,14 @@ const makePlaybackControlls = () => {
 
   test.addEventListener('pointerdown', () => {
     videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
+  })
+
+  loadProject.addEventListener('pointerdown', () => {
+    console.log('loadingProject')
+  })
+
+  saveProject.addEventListener('pointerdown', () => {
+    console.log('savingProject')
   })
 
   videoContainer.appendChild(playbackControlls)

@@ -51,6 +51,28 @@ const scale = (group: HTMLDivElement) => {
   return group
 }
 
+const speed = (group: HTMLDivElement) => {
+  const playbackGroup = creteSliderContainer('Speed')
+  group.appendChild(playbackGroup.container)
+
+  const slider = makeSlider(playbackGroup.slider, 0, 5)
+
+  playbackGroup.value.innerText = `1`
+  slider.set(1)
+
+  slider.on('end', () => adjustValue())
+  slider.on('slide', () => adjustValue())
+
+  const adjustValue = () => {
+    const value: any = slider.get()
+    if (vidSprite && videoSource) {
+      videoSource.playbackRate = value
+    }
+    playbackGroup.value.innerText = `${parseFloat(value)}`
+  }
+  return group
+}
+
 const recordingFps = (group: HTMLDivElement) => {
   const playbackGroup = creteSliderContainer('FPS')
   group.appendChild(playbackGroup.container)
@@ -94,30 +116,6 @@ const recordingScale = (group: HTMLDivElement) => {
   adjustValue()
   return group
 }
-
-const speed = (group: HTMLDivElement) => {
-  const playbackGroup = creteSliderContainer('Speed')
-  group.appendChild(playbackGroup.container)
-
-  const slider = makeSlider(playbackGroup.slider, 0, 5)
-
-  playbackGroup.value.innerText = `1`
-  slider.set(1)
-
-  slider.on('end', () => adjustValue())
-  slider.on('slide', () => adjustValue())
-
-  const adjustValue = () => {
-    const value: any = slider.get()
-    if (vidSprite && videoSource) {
-      videoSource.playbackRate = value
-    }
-    playbackGroup.value.innerText = `${parseFloat(value)}`
-  }
-  return group
-}
-
-
 
 const makeSlider = (div: HTMLDivElement, min: number, max: number) => {
   const slider = noUiSlider.create(div, {
