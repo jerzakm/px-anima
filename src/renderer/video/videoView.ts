@@ -38,6 +38,7 @@ export const refreshFilters = () => {
   }
 }
 //'D:\/px-anima\/static\/vid.mp4'
+export let videoPath = ''
 export const playVideo = async (path: string) => {
   if (loader.resources[path]) {
     play()
@@ -45,6 +46,7 @@ export const playVideo = async (path: string) => {
     loader
       .add(path, path)
       .load(() => {
+        videoPath = path
         play()
       })
   }

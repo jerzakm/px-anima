@@ -34,6 +34,8 @@ const palettePicker = (parentGroup: HTMLDivElement) => {
   addColorBtn.addEventListener('pointerdown', () => addColor(colorPickerContainer, '#6622AA'))
 }
 
+export let currentPalette: RgbColor[] = []
+
 const paletteRefresh = () => {
   const palette: RgbColor[] = []
   colorPickers.map(picker => {
@@ -52,6 +54,8 @@ const paletteRefresh = () => {
     const paletteLimiter = new PaletteLimiterBuilder(palette)
     videoFilters.paletteLimiter = paletteLimiter
   }
+
+  currentPalette = palette
 
   refreshFilters()
 }

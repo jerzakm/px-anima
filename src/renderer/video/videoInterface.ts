@@ -1,9 +1,10 @@
-const { dialog } = require('electron').remote
+const { dialog, BrowserWindow } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
 import { playVideo, videoSource, videoPlaybackSettings } from './videoView'
 import { createPlaybackSliders, outputDirPathLabel } from '../videoSettings/vidPlayback'
 import { videoRecordingSettings } from './videoSaving'
+import { saveUserSettings } from '../userSettings/userSettings'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -117,11 +118,35 @@ const makeVidButtons = () => {
   })
 
   loadProject.addEventListener('pointerdown', () => {
-    console.log('loadingProject')
+    let options = {
+      title: "Save file - px-anima project",
+      defaultPath: "C:\\project file.json",
+      buttonLabel: "Save Project File",
+      filters: [
+        { name: 'px-anima project file (JSON)', extensions: ['json'] },
+      ]
+    }
+    const window = BrowserWindow.getFocusedWindow();
+    if (window) {
+      const result = dialog.showSaveDialog(window, options)
+      console.log(result)
+    }
   })
 
   saveProject.addEventListener('pointerdown', () => {
-    console.log('savingProject')
+    let options = {
+      title: "Save file - px-anima project",
+      defaultPath: "C:\\project file.json",
+      buttonLabel: "Save Project File",
+      filters: [
+        { name: 'px-anima project file (JSON)', extensions: ['json'] },
+      ]
+    }
+    const window = BrowserWindow.getFocusedWindow();
+    if (window) {
+      const result = dialog.showSaveDialog(window, options)
+      saveUserSettings(result)
+    }
   })
 
   videoContainer.appendChild(playbackControlls)
