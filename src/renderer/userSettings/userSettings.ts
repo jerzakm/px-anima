@@ -12,6 +12,7 @@ const saveUserSettings = () => {
     //playback
     //videoPath
     //videoLoop
+    
 }
 
 interface IUserSettings {
@@ -21,6 +22,11 @@ interface IUserSettings {
         colorPalette: string[]
     },
     playback: {
-        playbackSpeed: number
-    }
+        playbackSpeed: number,
+        min: number,
+        max: number,
+        scale: number
+    },
+    saveDir: string,
+    vidDir: string,    
 }
