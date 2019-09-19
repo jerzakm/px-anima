@@ -22,7 +22,7 @@ export const videoPlaybackSettings = {
 
 export const initVideoView = (parent: Container) => {
   pixiVideoParent = parent
-  playVideo('D:\/px-anima\/static\/vid.mp4')
+  // playVideo('D:\/px-anima\/static\/vid.mp4')
 
   return update
 }
@@ -69,11 +69,12 @@ export const playVideo = async (path: string) => {
         video.loop = true
         renderer.ticker.maxFPS = 144
         videoPlaybackSettings.max = videoSource.duration
+        video.playbackRate = videoPlaybackSettings.playbackSpeed
         updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
       }
 
-      vidSprite.scale.x = 1
-      vidSprite.scale.y = 1
+      vidSprite.scale.x = videoPlaybackSettings.scale.x
+      vidSprite.scale.y = videoPlaybackSettings.scale.y
       pixiVideoParent.removeChildren()
       pixiVideoParent.addChild(vidSprite)
       refreshFilters()

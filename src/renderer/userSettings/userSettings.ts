@@ -4,9 +4,10 @@ import { videoFilters } from "../video/activeFilters";
 import { AdjustmentOptions } from "pixi-filters";
 import { RgbColor, PaletteLimiterBuilder } from "../shaders/PaletteLimiterBuilder";
 import { currentPalette, updatePalette } from "../videoSettings/colorLimiter";
-import { videoPlaybackSettings, videoPath, refreshFilters } from "../video/videoView";
+import { videoPlaybackSettings, videoPath, refreshFilters, playVideo, videoSource, vidSprite } from "../video/videoView";
 import { videoRecordingSettings } from "../video/videoSaving";
 import { guiUpdaters, updateGuiValues } from "../gui/gui";
+import { updateVideoSlider } from "../video/videoSlider";
 
 
 
@@ -57,6 +58,7 @@ export const loadUserSettings = (path: string) => {
 }
 
 const applyUserSettings = (settings: IProjectSettings) => {
+
     const { brightness, contrast, alpha, gamma, red, green, blue, saturation } = settings.filters.adjustmentPresets
 
     videoFilters.adjustment.brightness = brightness
@@ -74,6 +76,21 @@ const applyUserSettings = (settings: IProjectSettings) => {
     updateGuiValues()
 
     updatePalette(settings.filters.colorPalette)
+
+    videoPlaybackSettings.min = settings.playback.min
+    videoPlaybackSettings.max = settings.playback.max
+
+    videoPlaybackSettings.playbackSpeed = settings.playback.playbackSpeed
+
+    videoPlaybackSettings.scale.x = settings.playback.scale.x
+    videoPlaybackSettings.scale.y = settings.playback.scale.y
+
+    videoRecordingSettings.recordingDir = settings.recording.recordingDir
+    videoRecordingSettings.recordingFps = settings.recording.recordingFps
+    videoRecordingSettings.recordingScale = settings.recording.recordingScale
+
+    playVideo(settings.vidDir)
+    updateGuiValues()
 }
 
 interface IProjectSettings {

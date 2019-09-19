@@ -30,7 +30,6 @@ export const updatePalette = (palette: RgbColor[]) => {
   colorPickers = []
   for (const color of palette) {
     const c = new Color(color).hex()
-    console.log(c)
     addColor(colorPickerContainer, c, false)
   }
   paletteRefresh()

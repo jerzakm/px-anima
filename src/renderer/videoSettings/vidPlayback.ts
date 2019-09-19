@@ -2,6 +2,8 @@ import { createSettingsGroup, creteSliderContainer } from "./settingSliders"
 import * as noUiSlider from 'nouislider';
 import { videoSource, vidSprite, videoPlaybackSettings } from "../video/videoView";
 import { videoRecordingSettings } from "../video/videoSaving";
+import { guiUpdaters } from "../gui/gui";
+const { dialog } = require('electron').remote
 
 export const createPlaybackSliders = (parent: HTMLDivElement) => {
   playback(parent)
@@ -49,6 +51,12 @@ const scale = (group: HTMLDivElement) => {
     }
     playbackGroup.value.innerText = `${parseFloat(value)}`
   }
+  const update = () => {
+    slider.set(videoPlaybackSettings.scale.x)
+    adjustValue()
+  }
+
+  guiUpdaters.push(update)
   return group
 }
 
@@ -71,6 +79,11 @@ const speed = (group: HTMLDivElement) => {
     }
     playbackGroup.value.innerText = `${parseFloat(value)}`
   }
+  const update = () => {
+    slider.set(videoPlaybackSettings.playbackSpeed)
+    adjustValue()
+  }
+  guiUpdaters.push(update)
   return group
 }
 
@@ -93,6 +106,12 @@ const recordingFps = (group: HTMLDivElement) => {
     playbackGroup.value.innerText = `${parseInt(value, 10)}`
   }
   adjustValue()
+
+  const update = () => {
+    slider.set(videoRecordingSettings.recordingFps)
+    adjustValue()
+  }
+  guiUpdaters.push(update)
   return group
 }
 
@@ -115,6 +134,11 @@ const recordingScale = (group: HTMLDivElement) => {
     playbackGroup.value.innerText = `${parseInt(value, 10)}`
   }
   adjustValue()
+  const update = () => {
+    slider.set(videoRecordingSettings.recordingScale)
+    adjustValue()
+  }
+  guiUpdaters.push(update)
   return group
 }
 
@@ -137,10 +161,29 @@ const recordingPath = (group: HTMLDivElement) => {
   playbackGroup.value.innerHTML = ''
   playbackGroup.value.appendChild(browseBtn)
 
-  const adjustValue = () => {
+  browseBtn.addEventListener('pointerdown', () => {
+    if (videoRecordingSettings.recordingDir == 'default') {
+      const result = dialog.showOpenDialog({ properties: ['openDirectory'] })
+      if (result && result.length > 0) {
+        videoRecordingSettings.recordingDir = result[0]
+        if (outputDirPathLabel) {
+          outputDirPathLabel.innerText = result[0]
+        }
+      }
+    }
+    update()
+  })
 
+  const adjustValue = () => {
+    pathLabel.innerText = `${videoRecordingSettings.recordingDir}`
   }
   adjustValue()
+
+  const update = () => {
+    pathLabel.innerText = `${videoRecordingSettings.recordingDir}`
+    adjustValue()
+  }
+  guiUpdaters.push(update)
   return group
 }
 
