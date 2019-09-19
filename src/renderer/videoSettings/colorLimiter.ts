@@ -7,6 +7,7 @@ import { videoFilters } from '../video/activeFilters'
 import { refreshFilters } from '../video/videoView'
 import { readStaticFile } from '../../common/filesystemUtils'
 import { EmptyShader } from '../shaders/EmptyShader'
+import Color = require('color')
 
 export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
   const { container, settingsGroup } = createSettingsGroup(
@@ -21,6 +22,19 @@ export const createPaletteLimiterSliders = (parent: HTMLDivElement) => {
 let colorPickers: any[] = []
 const colorPickerContainer = document.createElement('div')
 const addColorBtn = document.createElement('div')
+
+export const updatePalette = (palette: RgbColor[]) => {
+  for (let i = 0; i < colorPickers.length; i++) {
+    colorPickers[i].destroyAndRemove()
+  }
+  colorPickers = []
+  for (const color of palette) {
+    const c = new Color(color).hex()
+    console.log(c)
+    addColor(colorPickerContainer, c, false)
+  }
+  paletteRefresh()
+}
 
 const palettePicker = (parentGroup: HTMLDivElement) => {
 

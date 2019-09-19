@@ -1,6 +1,7 @@
 import { createSettingsGroup, creteSliderContainer } from "./settingSliders"
 import * as noUiSlider from 'nouislider';
 import { videoFilters } from "../video/activeFilters";
+import { guiUpdaters } from "../gui/gui";
 
 export const createColorGradingSliders = (parent: HTMLDivElement) => {
   const { container, settingsGroup } = createSettingsGroup('Color grading', 'Description of what it does. Not too long and not too short. Just right')
@@ -33,6 +34,12 @@ const red = (group: HTMLDivElement) => {
     filter.adjustment.red = parseFloat(value)
     redSlider.value.innerText = `${filter.adjustment.red}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.red)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -55,6 +62,12 @@ const green = (group: HTMLDivElement) => {
     filter.adjustment.green = parseFloat(value)
     greenSlider.value.innerText = `${filter.adjustment.green}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.green)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -77,6 +90,12 @@ const blue = (group: HTMLDivElement) => {
     filter.adjustment.blue = parseFloat(value)
     blueSlider.value.innerText = `${filter.adjustment.blue}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.blue)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -99,6 +118,12 @@ const gamma = (group: HTMLDivElement) => {
     filter.adjustment.gamma = parseFloat(value)
     gammaSlider.value.innerText = `${filter.adjustment.gamma}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.gamma)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -121,6 +146,12 @@ const contrast = (group: HTMLDivElement) => {
     filter.adjustment.contrast = parseFloat(value)
     contrastSlider.value.innerText = `${filter.adjustment.contrast}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.contrast)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -143,6 +174,12 @@ const brightness = (group: HTMLDivElement) => {
     filter.adjustment.brightness = parseFloat(value)
     brightnessSlider.value.innerText = `${filter.adjustment.brightness}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.brightness)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 
@@ -165,6 +202,12 @@ const saturation = (group: HTMLDivElement) => {
     filter.adjustment.saturation = parseFloat(value)
     saturationSlider.value.innerText = `${filter.adjustment.saturation}`
   }
+
+  const updateSlider = () => {
+    slider.set(filter.adjustment.saturation)
+    adjustValue()
+  }
+  guiUpdaters.push(updateSlider)
   return group
 }
 

@@ -2,9 +2,9 @@ const { dialog, BrowserWindow } = require('electron').remote
 import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
 import { playVideo, videoSource, videoPlaybackSettings } from './videoView'
-import { createPlaybackSliders, outputDirPathLabel } from '../videoSettings/vidPlayback'
+import { outputDirPathLabel } from '../videoSettings/vidPlayback'
 import { videoRecordingSettings } from './videoSaving'
-import { saveUserSettings } from '../userSettings/userSettings'
+import { saveUserSettings, loadUserSettings } from '../userSettings/userSettings'
 
 const videoContainer = document.createElement('div')
 const videoSettingsContainer = document.createElement('div')
@@ -118,25 +118,24 @@ const makeVidButtons = () => {
   })
 
   loadProject.addEventListener('pointerdown', () => {
-    let options = {
-      title: "Save file - px-anima project",
-      defaultPath: "C:\\project file.json",
-      buttonLabel: "Save Project File",
+    const result = dialog.showOpenDialog({
+      title: "Load px-anima project",
+      defaultPath: "C:\\pxAnimaProject.json",
+      buttonLabel: "Load Project File",
       filters: [
         { name: 'px-anima project file (JSON)', extensions: ['json'] },
-      ]
-    }
-    const window = BrowserWindow.getFocusedWindow();
-    if (window) {
-      const result = dialog.showSaveDialog(window, options)
-      console.log(result)
+      ],
+      properties: ['openFile']
+    })
+    if (result && result.length > 0) {
+      loadUserSettings(result[0])
     }
   })
 
   saveProject.addEventListener('pointerdown', () => {
     let options = {
-      title: "Save file - px-anima project",
-      defaultPath: "C:\\project file.json",
+      title: "Save px-anima project",
+      defaultPath: "C:\\pxAnimaProject.json",
       buttonLabel: "Save Project File",
       filters: [
         { name: 'px-anima project file (JSON)', extensions: ['json'] },
@@ -145,7 +144,9 @@ const makeVidButtons = () => {
     const window = BrowserWindow.getFocusedWindow();
     if (window) {
       const result = dialog.showSaveDialog(window, options)
-      saveUserSettings(result)
+      if (result) {
+        saveUserSettings(result)
+      }
     }
   })
 

@@ -1,6 +1,7 @@
 import { createSettingsGroup, creteSliderContainer } from "./settingSliders"
 import * as noUiSlider from 'nouislider';
 import { videoFilters } from "../video/activeFilters";
+import { guiUpdaters } from "../gui/gui";
 
 export const createPixelizerSliders = (parent: HTMLDivElement) => {
   const { container, settingsGroup } = createSettingsGroup(
@@ -30,6 +31,11 @@ const pixelizer = (group: HTMLDivElement) => {
     filter.pixelate.size = [parseInt(value, 10), parseInt(value, 10)]
     pixelFilter.value.innerText = `${parseInt(value, 10)}`
   }
+  const update = () => {
+    slider.set(filter.pixelate.uniforms.size[0])
+    adjustValue()
+  }
+  guiUpdaters.push(update)
   return group
 }
 

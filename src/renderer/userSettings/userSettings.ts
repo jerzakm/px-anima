@@ -1,21 +1,23 @@
-import { writeFile } from "fs";
+import { writeFile, readFile } from "fs";
 const { dialog } = require('electron').remote
 import { videoFilters } from "../video/activeFilters";
 import { AdjustmentOptions } from "pixi-filters";
-import { RgbColor } from "../shaders/PaletteLimiterBuilder";
-import { currentPalette } from "../videoSettings/colorLimiter";
-import { videoPlaybackSettings, videoPath } from "../video/videoView";
+import { RgbColor, PaletteLimiterBuilder } from "../shaders/PaletteLimiterBuilder";
+import { currentPalette, updatePalette } from "../videoSettings/colorLimiter";
+import { videoPlaybackSettings, videoPath, refreshFilters } from "../video/videoView";
 import { videoRecordingSettings } from "../video/videoSaving";
+import { guiUpdaters, updateGuiValues } from "../gui/gui";
+
+
+
 
 export const saveUserSettings = (path: string) => {
-
-    //filters
     const { brightness, contrast, alpha, gamma, red, green, blue, saturation } = videoFilters.adjustment
     const adjustmentPresets: AdjustmentOptions = { brightness, contrast, alpha, gamma, red, green, blue, saturation }
 
     const pixelSize = videoFilters.pixelate.uniforms.size[0]
 
-    const userSettings: IUserSettings = {
+    const userSettings: IProjectSettings = {
         filters: {
             adjustmentPresets: adjustmentPresets,
             pixelSize: pixelSize,
@@ -39,13 +41,53 @@ export const saveUserSettings = (path: string) => {
     }
 
     writeFile(path, JSON.stringify(userSettings), function (err) {
-        // console.log();
+        console.log(err);
     });
 }
 
-interface IUserSettings {
+export const loadUserSettings = (path: string) => {
+    readFile(path, (err, data) => {
+        if (err) {
+            console.log(err)
+        } else if (data) {
+            const userSettings: IProjectSettings = JSON.parse(data.toString())
+            applyUserSettings(userSettings)
+        }
+    })
+}
+
+const applyUserSettings = (settings: IProjectSettings) => {
+    const { brightness, contrast, alpha, gamma, red, green, blue, saturation } = settings.filters.adjustmentPresets
+
+    videoFilters.adjustment.brightness = brightness
+    videoFilters.adjustment.contrast = contrast
+    videoFilters.adjustment.alpha = alpha
+    videoFilters.adjustment.gamma = gamma
+    videoFilters.adjustment.red = red
+    videoFilters.adjustment.green = green
+    videoFilters.adjustment.blue = blue
+    videoFilters.adjustment.saturation = saturation
+    refreshFilters()
+    updateGuiValues()
+
+    videoFilters.pixelate.uniforms.size = [settings.filters.pixelSize, settings.filters.pixelSize]
+    updateGuiValues()
+
+    updatePalette(settings.filters.colorPalette)
+}
+
+interface IProjectSettings {
     filters: {
-        adjustmentPresets: AdjustmentOptions
+        adjustmentPresets: {
+            brightness: number,
+            contrast: number,
+            alpha: number,
+            gamma: number,
+            red: number,
+            green: number,
+            blue: number,
+            saturation: number
+        }
         pixelSize: number
         colorPalette: RgbColor[]
     },

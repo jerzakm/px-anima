@@ -3,6 +3,8 @@ import './style.scss';
 import { makeVideoPlayer, makeVideoSettings } from '../video/videoInterface';
 import { createPlaybackSliders } from '../videoSettings/vidPlayback';
 
+export const guiUpdaters: any[] = []
+
 export const initGui = () => {
   makeMain()
 }
@@ -33,4 +35,8 @@ const makeMain = () => {
   createPlaybackSliders(playbackSettingsSide)
 
   return main
+}
+
+export const updateGuiValues = () => {
+  guiUpdaters.map(updater => updater())
 }
