@@ -1,26 +1,31 @@
 import { writeFile, readFile } from "fs";
-const { dialog } = require('electron').remote
 import { videoFilters } from "../video/activeFilters";
-import { AdjustmentOptions } from "pixi-filters";
-import { RgbColor, PaletteLimiterBuilder } from "../shaders/PaletteLimiterBuilder";
+import { RgbColor } from "../shaders/PaletteLimiterBuilder";
 import { currentPalette, updatePalette } from "../videoSettings/colorLimiter";
-import { videoPlaybackSettings, videoPath, refreshFilters, playVideo, videoSource, vidSprite } from "../video/videoView";
+import { videoPlaybackSettings, videoPath, refreshFilters, playVideo } from "../video/videoView";
 import { videoRecordingSettings } from "../video/videoSaving";
-import { guiUpdaters, updateGuiValues } from "../gui/gui";
-import { updateVideoSlider } from "../video/videoSlider";
+import { updateGuiValues } from "../gui/gui";
 
 
 
 
 export const saveUserSettings = (path: string) => {
     const { brightness, contrast, alpha, gamma, red, green, blue, saturation } = videoFilters.adjustment
-    const adjustmentPresets: AdjustmentOptions = { brightness, contrast, alpha, gamma, red, green, blue, saturation }
 
     const pixelSize = videoFilters.pixelate.uniforms.size[0]
 
     const userSettings: IProjectSettings = {
         filters: {
-            adjustmentPresets: adjustmentPresets,
+            adjustmentPresets: {
+                brightness: brightness,
+                contrast: contrast,
+                alpha: alpha,
+                gamma: gamma,
+                red: red,
+                green: green,
+                blue: blue,
+                saturation: saturation
+            },
             pixelSize: pixelSize,
             colorPalette: currentPalette
         },

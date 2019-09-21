@@ -60,3 +60,56 @@ Right now only:
 ## Project control buttons
 
 - Record: goes to min playback value set by slider handles and starts saving frames as png images in the provided location.  If the output directory hasn't been provided yet, it will open a file explorer window.
+
+- Save project - saves a json file with project settings. It only references media file and output dir location, so problems may occur if those change.
+
+- Load project - loads a json file with project settings.
+
+```ts
+interface IProjectSettings {
+    filters: {
+        adjustmentPresets: {
+            brightness: number,
+            contrast: number,
+            alpha: number,
+            gamma: number,
+            red: number,
+            green: number,
+            blue: number,
+            saturation: number
+        }
+        pixelSize: number
+        colorPalette: RgbColor[]
+    },
+    playback: {
+        playbackSpeed: number,
+        min: number,
+        max: number,
+        scale: {
+            x: number,
+            y: number
+        }
+    },
+    recording: {
+        recordingFps: number,
+        recordingScale: number,
+        recordingDir: string
+    },
+    vidDir: string,
+}
+```
+
+# Playback & Recording settings (right panel)
+
+## Playback
+
+- Media scale: evenly scales media up and down. Even if the media is outside of the display canvas, the application will still save the entire thing to file.
+- Speed: video playback speed
+
+## Recording
+- Fps: how many frames to save per second of playback
+- Scale: ugly solution and pretty bugged.
+    - 0: the program will save 1:1 pixels but it doesnt resize the image.
+    - 1: the program will save 1:PixelizerSize pixels, creating much larger, upscaled images
+
+Recording methods and settings are definitely a priority to fix and expand on after the jam.

@@ -45,6 +45,9 @@ function createMainWindow() {
     })
   })
 
+  window.setMenu(null)
+  window.setTitle('pxAnima')
+
   return window
 }
 
@@ -66,4 +69,7 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
+  if (mainWindow) {
+    mainWindow.maximize()
+  }
 })

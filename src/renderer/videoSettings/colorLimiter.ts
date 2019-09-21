@@ -1,5 +1,7 @@
 import '@simonwep/pickr/dist/themes/monolith.min.css'
-import * as Pickr from '@simonwep/pickr/dist/pickr.es5.min'
+// import * as Pickr from '@simonwep/pickr/dist/pickr.es5.min'
+
+const Pickr = require('@simonwep/pickr/dist/pickr.es5.min')
 
 import { createSettingsGroup } from "./settingSliders"
 import { PaletteLimiterBuilder, RgbColor } from '../shaders/PaletteLimiterBuilder'

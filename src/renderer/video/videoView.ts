@@ -3,7 +3,7 @@ import { loader, renderer } from ".."
 import { updateVideoSlider } from "./videoSlider"
 import { videoFilters } from "./activeFilters"
 import { refreshVideoHeader } from "./videoInterface"
-import { saveFrameToImage } from "./videoSaving"
+import { saveFrameToImage, videoRecordingSettings } from "./videoSaving"
 
 export let videoSource: undefined | HTMLVideoElement
 let pixiVideoParent: Container | undefined
@@ -67,7 +67,7 @@ export const playVideo = async (path: string) => {
         videoSource = video
         video.volume = 0
         video.loop = true
-        renderer.ticker.maxFPS = 144
+        renderer.ticker.maxFPS = 60
         videoPlaybackSettings.max = videoSource.duration
         video.playbackRate = videoPlaybackSettings.playbackSpeed
         updateVideoSlider(videoSource.currentTime, videoSource.duration, videoPlaybackSettings.min, videoPlaybackSettings.max)
@@ -95,9 +95,9 @@ const update = (delta: number) => {
 
     if (videoPlaybackSettings.recordingMode) {
       saveFrameToImage()
-      vidTime += 0.123
+      vidTime += 1 / videoRecordingSettings.recordingFps
       videoSource.currentTime = vidTime
-      renderer.ticker.maxFPS = 3
+      renderer.ticker.maxFPS = 1
     } else {
       renderer.ticker.maxFPS = 60
     }

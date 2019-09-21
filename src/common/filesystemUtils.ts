@@ -1,6 +1,7 @@
-import { jsReadStaticFile } from './staticWorkaround'
+// import { jsReadStaticFile } from './staticWorkaround'
+const sUtil = require('./staticWorkaround')
 
 export const readStaticFile = (filename: string) => {
-  const contents = jsReadStaticFile(filename)
+  const contents = sUtil.jsReadStaticFile(filename)
   return contents
 }
