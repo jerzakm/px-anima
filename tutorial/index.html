@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>px-anima brief tutorial</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #999999;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .card {
+      margin: 10px;
+      width: 50vw;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>pxAnima beginner's guide</h1>
+  <div class="wrapper">
+    <div class="card">
+      <img src="1.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">1) Load video file or an image</h5>
+        <p class="card-text">
+          Press load media button to load a media file. Main supported format is mp4 but you're welcome to try others.
+          While this program is meant for videos, images work as well. In this example we will be using drone footage
+          provided in the example folder.
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="2.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">2) Color palette</h5>
+        <p class="card-text">
+          There is no particular order you have to manipulate any of the sliders or settings. I like to start with a
+          color palette. I decided to use 'Firestorm'.
+        </p>
+        <p class="card-text">
+          You can remove colors with right click and edit by left click. To add a new one, press the orange (+) button.
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="3.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">3) Playing with sliders</h5>
+        <p class="card-text">
+          Just like the title. Each video requires different approach. Did I mention that it'd be best if you went out
+          into the real world and shot your own video? If you plan to use this for character animation reference, using
+          a simple one color background helps. Don't wear white clothes when the wall behind you is also white :)
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="4.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">4) Video playback options</h5>
+        <p class="card-text">There are 3 handles on the video playback bar. The central one shows the current timestamp.
+          With left and right one you can limit the playback range and only render the part of the video that's
+          interesting to you.</p>
+        <p class="card-text">On the right side of the video there are a few simple playback and recording options.
+          Playback ones are pretty self explanatory</p>
+        <p class="card-text">Recording fps slider is exactly that. How many frames per a second of playback the
+          application will attempt to save.</p>
+        <p class="card-text">Scale is a boolean, whether to save 1pixel to 1 pixel in the file or 1 pixel to many pixel
+          squares (pixelizer size). I know, ugly solution. No time though :)</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">5) Recording</h5>
+        <p class="card-text">Record button is a toggle. When you press it the video will jump to the leftmost slider
+          handle (start of the loop) and will try to keep saving .png images to the provided folder until you turn it
+          off. I recommend to let it run at least twice. It's yet another ugly solution to a core freature that I didnt
+          have time to expand on. Making this more user friendly and consistent is a top priority in the coming days.
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="5.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">6) Results</h5>
+        <p class="card-text">Here's some results. They likely require a lot of manual work to make them usable but
+          im quite happy with the project and the general concept. I plan to keep working on it in my spare time.</p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
