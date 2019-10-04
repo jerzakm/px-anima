@@ -65,7 +65,7 @@ export const playVideo = async (path: string) => {
 
       if (video instanceof HTMLVideoElement) {
         videoSource = video
-        video.volume = 0
+        // video.volume = 0
         video.loop = true
         renderer.ticker.maxFPS = 60
         videoPlaybackSettings.max = videoSource.duration

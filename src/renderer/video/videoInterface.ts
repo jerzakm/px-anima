@@ -3,7 +3,7 @@ import { createVideoSlider } from './videoSlider'
 import { createSettingsSliders } from '../videoSettings/settingSliders'
 import { playVideo, videoSource, videoPlaybackSettings } from './videoView'
 import { outputDirPathLabel } from '../videoSettings/vidPlayback'
-import { videoRecordingSettings } from './videoSaving'
+import { videoRecordingSettings, saveFrameToImage } from './videoSaving'
 import { saveUserSettings, loadUserSettings } from '../userSettings/userSettings'
 
 const videoContainer = document.createElement('div')
@@ -79,6 +79,11 @@ const makeVidButtons = () => {
   record.innerText = 'Record'
   playbackControlls.appendChild(record)
 
+  const saveFrame = document.createElement('button')
+  saveFrame.className = 'pxBtn'
+  saveFrame.innerText = 'Save frame'
+  playbackControlls.appendChild(saveFrame)
+
   const loadProject = document.createElement('button')
   loadProject.className = 'pxBtn'
   loadProject.innerText = 'Load project'
@@ -114,6 +119,21 @@ const makeVidButtons = () => {
 
     function recordToggle() {
       videoPlaybackSettings.recordingMode ? videoPlaybackSettings.recordingMode = false : videoPlaybackSettings.recordingMode = true
+    }
+  })
+
+  saveFrame.addEventListener('pointerdown', () => {
+    if (videoRecordingSettings.recordingDir == 'default') {
+      const result = dialog.showOpenDialog({ properties: ['openDirectory'] })
+      if (result && result.length > 0) {
+        videoRecordingSettings.recordingDir = result[0]
+        if (outputDirPathLabel) {
+          outputDirPathLabel.innerText = result[0]
+        }
+      }
+      saveFrameToImage()
+    } else {
+      saveFrameToImage()
     }
   })
 

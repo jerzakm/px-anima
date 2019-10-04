@@ -11,7 +11,9 @@ export const videoRecordingSettings = {
 }
 
 export const saveFrameToImage = async () => {
-  if (vidSprite && videoSource) {
+  console.log(vidSprite)
+  //TODO branch off for videos and images
+  if (vidSprite) {
     const rt = RenderTexture.create({ width: vidSprite.width, height: vidSprite.height })
     renderer.renderer.render(vidSprite, rt);
     const sp = Sprite.from(rt)
