@@ -6,6 +6,9 @@ Entry for Game Tools Hackathon [8 Bits to Infinity] made by Marcin Jerzak.
 My github is a mess.
 https://github.com/jerzakm/px-anima
 
+## 2020 webapp addition
+Simple image pixelizer.
+
 ## Credits:
 
 Since it's a typescript electron project the list of dependencies is rather long.
