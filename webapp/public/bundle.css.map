@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "..\\App.svelte"
+  ],
+  "sourcesContent": [
+    "<h1>ok</h1>\r\n122\r\n<style>\r\n    h1{\r\n        color: red;\r\n    }\r\n</style>"
+  ],
+  "names": [],
+  "mappings": "AAGI,gBAAE,CAAC,AACC,KAAK,CAAE,GAAG,AACd,CAAC"
+}
