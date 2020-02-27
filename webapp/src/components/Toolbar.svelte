@@ -11,19 +11,16 @@
         top: 50px;
         left: 50px;
     }
-    .active {
-        color: red;
-    }
 </style>
 
 <div class="card-container toolbar">
     <div>
-    <Card>
-        <Content component={List}>
-            <Item>
-                <Icon class="material-icons active" on>grid_on</Icon>
-            </Item>
-        </Content>
-    </Card>
+        <Card>
+            <Content component={List}>
+                <Item>
+                    <Icon class="material-icons" on>grid_on</Icon>
+                </Item>
+            </Content>
+        </Card>
     </div>
 </div>
