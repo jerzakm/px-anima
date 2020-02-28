@@ -1,8 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');
+@import 'smui-theme.scss';
 
 body{
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto';
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-color: #efefef;
+}
+
+.logo {
+    color: $mdc-theme-surface;
 }
