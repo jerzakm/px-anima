@@ -69,7 +69,6 @@
   import { userAuth } from "../stores.ts";
 
   const unsubscribe = userAuth.subscribe(value => {
-    console.log(`subbed value changed`, value);
     user = value;
   });
 

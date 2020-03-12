@@ -1,50 +1,47 @@
 <script>
     import {onMount} from 'svelte'
     import * as PIXI from 'pixi.js'
+    import * as Filters from 'pixi-filters'
+    import { filterArray } from "../../stores";
 
-    let renderer
-    let ticker
-    let stage
-
-    onMount(()=> {
-        renderer = new PIXI.Renderer(
-            {   width: window.innerWidth,
-                height: window.innerHeight,
-                backgroundColor: 0xFFFFFF,
-                forceFXAA: false,
-                powerPreference: 'high-performance',
-            }
-        )
-
-        window.addEventListener('resize', ()=> {
-            renderer.view.width = window.innerWidth
-            renderer.view.height = window.innerHeight
+    const renderer= new PIXI.Renderer(
+        {   width: window.innerWidth,
+            height: window.innerHeight,
+            backgroundColor: 0xFFFFFF,
+            forceFXAA: false,
+            powerPreference: 'high-performance',
         })
+    let ticker= new PIXI.Ticker()
+    let stage= new PIXI.Container();
+
+    window.addEventListener('resize', ()=> {
+        renderer.view.width = window.innerWidth
+        renderer.view.height = window.innerHeight
+    })
+
+    const sprite = PIXI.Sprite.from('test.jpg');
+    stage.addChild(sprite)
+    const scale = 0.5
+    sprite.scale.x=scale
+    sprite.scale.y=scale
+
+    const unsubscribe = filterArray.subscribe(value => {
+        console.log('new filters arrived')
+        sprite.filters = []
+        value.map(v => sprite.filters.push(v.value))
+    });
 
 
-        ticker = new PIXI.Ticker()
-        ticker.maxFPS = 60
 
-        stage = new PIXI.Container();
+    ticker.add(() => {
+        renderer.render(stage)
+    }, PIXI.UPDATE_PRIORITY.LOW)
 
-        const g = new PIXI.Graphics()
-        stage.addChild(g)
-        g.beginFill(0xdedede)
-        g.drawRect(100,100,500,500)
-        g.endFill()
+    ticker.start()
 
-        ticker.add(() => {
-            renderer.render(stage)
-        }, PIXI.UPDATE_PRIORITY.LOW)
+    document.body.appendChild(renderer.view)
+    renderer.view.className = 'main-canvas'
 
-        ticker.start()
-
-        document.body.appendChild(renderer.view)
-        renderer.view.className = 'main-canvas'
-
-        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST}
-
-    )
-
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
 
 </script>

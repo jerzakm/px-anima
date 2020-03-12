@@ -3,26 +3,27 @@
 import { flip } from "svelte/animate";
 import { quintOut, quadIn, sineIn } from 'svelte/easing';
 import Sortable from "svelte-sortablejs";
+import * as Filters from 'pixi-filters'
+import { filterArray } from "../../stores";
 
 let list = [];
 let options = {
-  group: "people",
   draggable: ".todo"
 };
 
-for(let i =0;i< 15;i++) {
-    list.push({id: i, name: `testName${i}`})
-}
+list.push({id: 0, name: 'Zoom',value: new Filters.ZoomBlurFilter()})
+list.push({id: 1, name: 'CrossHatch', value: new Filters.CrossHatchFilter()})
 
+$: list && filterArray.set(list) &&console.log('changed filter list')
 </script>
 
 <Sortable {options} bind:list>
-        {#each list as todo (todo.id)}
+        {#each list as filter (filter.name)}
           <li
             animate:flip={{ duration: 150, easing: sineIn }}
-            sortable-id={todo.id}
+            sortable-id={filter.name}
             class="todo">
-            {todo.name}
+            {filter.name}
           </li>
         {/each}
 </Sortable>
