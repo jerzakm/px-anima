@@ -22,6 +22,7 @@ list.push({id: 1, name: 'Layer B'})
         width: 50px;
         height: 50px;
         background-color: white;
+        margin: 5px;
     }
     .layers{
         list-style-type: none;
@@ -32,6 +33,9 @@ list.push({id: 1, name: 'Layer B'})
         align-items: center;
         background-color: #DDDDDD;
         margin: 6px;
+    }
+    .layer-name{
+        font-size: 0.75rem;
     }
 
 </style>
@@ -44,7 +48,7 @@ list.push({id: 1, name: 'Layer B'})
             class="layers">
             <div class="layer-entry-container">
                 <div class="layer-preview"/>
-                <span>{layer.name}</span>
+                <span class="layer-name">{layer.name}</span>
             </div>
           </li>
         {/each}
